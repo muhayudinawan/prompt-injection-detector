@@ -221,3 +221,6 @@ __marimo__/
 
 # Nedlastede/genererte datasett
 data/
+
+# Trente modeller
+models/
