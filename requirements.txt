@@ -4,3 +4,6 @@ datasets
 matplotlib
 jupyter
 pyarrow
+torch
+transformers
+sentencepiece

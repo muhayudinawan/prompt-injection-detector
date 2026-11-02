@@ -8,7 +8,8 @@ Kjør fra prosjektroten etter notebook 01:
     python src/translate.py
 
 Resultatet lagres i data/translated_no.parquet. Modellen er
-Helsinki-NLP/opus-mt-tc-big-en-gmq (CC-BY-4.0).
+Helsinki-NLP/opus-mt-tc-big-en-gmq (CC-BY-4.0). Bruker GPU hvis den finnes
+(ca. 5 minutter), ellers CPU (ca. 1 time).
 """
 import re
 import sys
@@ -41,6 +42,9 @@ def chunks(text):
     return [p.strip() for p in re.split(r"\n\s*\n|\n", text) if p.strip()]
 
 
+DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+
+
 @torch.inference_mode()
 def translate(texts, tok, mt, batch_size=16):
     parts = [(i, c) for i, t in enumerate(texts) for c in chunks(t)]
@@ -50,7 +54,7 @@ def translate(texts, tok, mt, batch_size=16):
     for b in range(0, len(order), batch_size):
         idx = order[b:b + batch_size]
         enc = tok([">>nob<< " + parts[k][1] for k in idx], return_tensors="pt",
-                  padding=True, truncation=True, max_length=512)
+                  padding=True, truncation=True, max_length=512).to(DEVICE)
         dec = tok.batch_decode(mt.generate(**enc, num_beams=1, max_new_tokens=512), skip_special_tokens=True)
         for k, d in zip(idx, dec):
             out[k] = d
@@ -68,7 +72,7 @@ def main():
     print(f"Oversetter {len(s):,} tekster ({s['label'].sum():,} angrep)")
     print(s.groupby(["source", "label"]).size().to_string())
     tok = MarianTokenizer.from_pretrained(MODEL)
-    mt = MarianMTModel.from_pretrained(MODEL).eval()
+    mt = MarianMTModel.from_pretrained(MODEL).eval().to(DEVICE)
     out = pd.DataFrame({
         "text": translate(s["text"].tolist(), tok, mt),
         "label": s["label"].to_numpy(),

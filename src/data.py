@@ -201,6 +201,7 @@ LOADERS = [
     load_dolly,
     load_notinject,
     load_emails,
+    load_hard_negatives_en,
 ]
 
 
@@ -231,6 +232,19 @@ def clean(df):
 def load_all():
     raw = pd.concat([load() for load in LOADERS], ignore_index=True)[COLUMNS]
     return raw, clean(raw)
+
+
+def load_training_data(root):
+    """data/combined.parquet pluss de oversatte norske treningsdataene, hvis de finnes.
+
+    Oversettelsen lages av src/translate.py etter notebook 01. Uten den mangler
+    treningen norske eksempler, og modellen blir klart dårligere på norsk.
+    """
+    df = pd.read_parquet(Path(root) / "data" / "combined.parquet")
+    if not (Path(root) / "data" / "translated_no.parquet").exists():
+        print("Advarsel: data/translated_no.parquet mangler. Kjør src/translate.py for norske treningsdata.")
+        return df
+    return clean(pd.concat([df, load_translated_no(root)], ignore_index=True))
 
 
 def load_own_testsets(root):
