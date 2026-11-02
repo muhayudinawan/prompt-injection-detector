@@ -59,4 +59,13 @@ Av samme grunn inneholder `vanlig` også lange meldinger der folk beskriver situ
 
 ## Status
 
-Første versjon av testsettene er et **utkast skrevet av en språkmodell (Claude)**. Alle rader har `gjennomgatt = false` til et menneske har lest og godkjent dem. Bruk tallene med forsiktighet frem til da, og bruk aldri disse testsettene til trening.
+Testsettene er skrevet av en språkmodell (Claude) og deretter gjennomgått av et menneske med `testsets/review.py`. Rader som er lest og godkjent har `gjennomgatt = true`.
+
+| Språk | Gjennomgått fullt | Stikkprøve (`--utvalg`, fast frø) | Totalt | Fasit snudd |
+|---|---|---|---|---|
+| Norsk | `vanskelig`, `dokument`, `skjult`, `direkte` | 20 fra `rollespill`, `forkledd` og `vanlig` | 323 av 596 | 0 |
+| Engelsk | – | 10 fra hver kategori | 70 av 596 | 0 |
+
+De fire norske kategoriene som er gjennomgått fullt, er grensetilfellene der feil er mest sannsynlig. Den engelske stikkprøven sjekker oversettelsene, siden hver engelsk melding er en tvilling av en norsk. Ingen fasit ble endret av 393 gjennomgåtte meldinger. Feilraten er derfor mest sannsynlig under ca. 1 %.
+
+Bruk aldri disse testsettene til trening.

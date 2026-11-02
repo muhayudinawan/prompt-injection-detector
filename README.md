@@ -22,11 +22,15 @@ A message is an attack if it tries to make the chatbot break, bypass or replace 
 
 ## Data
 
-Training data: `deepset/prompt-injections`, `jackhhao/jailbreak-classification`, `xTRam1/safe-guard-prompt-injection` and `reshabhs/SPML_Chatbot_Prompt_Injection`.
+Training data: `deepset/prompt-injections`, `jackhhao/jailbreak-classification`, `xTRam1/safe-guard-prompt-injection`, and emails: 4,000 human-written indirect attacks from `microsoft/llmail-inject-challenge` (Phase1) balanced by 4,000 ordinary Enron emails from `Yale-LILY/aeslc`.
 
-Test data from sources the model never trains on: `Lakera/gandalf_ignore_instructions`, the jailbreak part of `TrustAIRLab/in-the-wild-jailbreak-prompts`, and `databricks/databricks-dolly-15k` as ordinary questions. The "regular" part of TrustAIRLab is left out because many of its prompts are obvious jailbreaks.
+The email attacks are sampled so their lengths match the ordinary emails, and their target (`contact@contact.com` and the word "confirmation") is masked, so the model cannot recognise them by length or by one address. Without the ordinary emails the model learned that "document = attack" and blocked 59 % of harmless Norwegian documents in the custom test set. The license of `Yale-LILY/aeslc` is listed as unknown; the underlying Enron corpus was made public by the US Federal Energy Regulatory Commission.
 
-**Custom test sets:** 596 messages each in Norwegian and English, written as parallel pairs, so differences between languages come from the language and not the content. They cover ordinary questions, harmless messages that look like attacks, documents with and without hidden instructions, and direct, role-play and obfuscated attacks. They are a first draft written with an LLM (Claude) and are being reviewed by a human. They are only used for testing, never training.
+`reshabhs/SPML_Chatbot_Prompt_Injection` was used at first but has been removed. Its authors advise against training detection models on it, and it made up two thirds of the training data. Without it the baseline improved clearly on the custom test sets: ROC AUC went from 0.75 to 0.81 in Norwegian and from 0.83 to 0.91 in English.
+
+Test data from sources the model never trains on: `Lakera/gandalf_ignore_instructions`, the jailbreak part of `TrustAIRLab/in-the-wild-jailbreak-prompts`, `databricks/databricks-dolly-15k` as ordinary questions, and `leolee99/NotInject` (harmless messages containing trigger words such as "ignore"). The "regular" part of TrustAIRLab is left out because many of its prompts are obvious jailbreaks. About 9 % of the TrustAIRLab test prompts have near-duplicates in `jackhhao`, since both come from the same source, so TrustAIRLab is not fully unseen. 1,000 attacks from LLMail-Inject Phase2 are also kept for testing.
+
+**Custom test sets:** 596 messages each in Norwegian and English, written as parallel pairs, so differences between languages come from the language and not the content. They cover ordinary questions, harmless messages that look like attacks, documents with and without hidden instructions, and direct, role-play and obfuscated attacks. They were written with an LLM (Claude) and reviewed by a human: all borderline categories in Norwegian in full, plus samples from the rest and from English, 393 messages in total. No label had to be changed. They are only used for testing, never training.
 
 ## Results so far
 
@@ -34,21 +38,26 @@ Baseline (TF-IDF + logistic regression), threshold set for at most 1 % false pos
 
 | Test set | Recall | False positive rate | ROC AUC |
 |---|---|---|---|
-| Public, sources seen in training | 0.93 | 0.8 % | 0.99 |
-| Public, unseen sources | 0.85 | 0.3 % | 0.99 |
-| Custom, English | 0.36 | 1.7 % | 0.83 |
-| Custom, **Norwegian** | **0.05** | 0.3 % | 0.75 |
+| Public, sources seen in training | 0.97 | 0.6 % | 1.00 |
+| Public, unseen sources | 0.88 | 2.5 % | 0.98 |
+| NotInject (harmless, with trigger words) | – | **34 %** | – |
+| Custom, English | 0.70 | 6.2 % | 0.92 |
+| Custom, **Norwegian** | 0.69 | **12.7 %** | 0.87 |
 
-The public test sets make the baseline look excellent. The custom sets show the real gaps: it is almost blind to Norwegian attacks, and it misses obfuscated attacks and instructions hidden in documents in both languages.
+The public test sets make the baseline look excellent. The custom sets and NotInject show the real gaps: it blocks far too many harmless messages that only look like attacks (32 % of them in Norwegian, 34 % of NotInject), and harmless Norwegian documents are often flagged.
 
-`protectai/deberta-v3-base-prompt-injection-v2` on the custom test sets, with the same 1 % false positive target on validation data (threshold 0.994):
+The threshold is chosen for 1 % false positives on validation data from the training sources. Those are easier than the custom test sets, so the false positive rate there ends up much higher than 1 %. ROC AUC, which does not depend on the threshold, is the more reliable comparison. A separate Norwegian calibration set would give a better threshold.
+
+`protectai/deberta-v3-base-prompt-injection-v2` on the custom test sets, at its default threshold of 0.5:
 
 | Test set | Recall | False positive rate | ROC AUC |
 |---|---|---|---|
-| Custom, English | 0.61 | 3.7 % | 0.96 |
-| Custom, Norwegian | 0.62 | **8.7 %** | 0.87 |
+| Custom, English | 0.71 | 4.8 % | 0.96 |
+| Custom, Norwegian | 0.74 | **13.2 %** | 0.87 |
 
-It catches far more Norwegian attacks than the baseline, but it also blocks many harmless Norwegian messages, especially those that only look like attacks (28 % of them). Instructions hidden in documents remain the weakest category for both models.
+With the email data in training, the baseline has caught up in Norwegian (ROC AUC 0.87 for both) but not in English (0.92 against 0.96). ProtectAI catches almost all obfuscated attacks, while the baseline is much better at instructions hidden in emails and documents (99 % against 29 % on LLMail-Inject Phase2). Both block many harmless messages that only look like attacks: 43 % of NotInject for ProtectAI.
+
+ProtectAI cannot be calibrated fairly on our validation data, because that data comes from our training sources and ProtectAI was partly trained on the same sources (including jackhhao). ROC AUC is therefore the main comparison.
 
 ## Getting started
 

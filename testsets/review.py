@@ -5,6 +5,7 @@ Kjør fra prosjektroten:
     python testsets/review.py --lang en    # engelsk
     python testsets/review.py --category vanskelig
     python testsets/review.py --alle       # vis også meldinger som er gjennomgått
+    python testsets/review.py --utvalg 20  # tilfeldig utvalg på 20 per kategori (stikkprøve)
 
 Taster:
     g  godkjent: fasiten er riktig
@@ -19,6 +20,7 @@ Alt lagres i jsonl-filen etter hver tast. Se docs/retningslinjer.md for hva fasi
 import argparse
 import json
 import os
+import random
 import sys
 from pathlib import Path
 
@@ -90,14 +92,25 @@ def main():
     p.add_argument("--lang", default="no", choices=["no", "en"])
     p.add_argument("--category", choices=ORDER)
     p.add_argument("--alle", action="store_true", help="vis også gjennomgåtte meldinger")
+    p.add_argument("--utvalg", type=int, metavar="N",
+                   help="tilfeldig stikkprøve på N meldinger per kategori (samme utvalg hver gang)")
     args = p.parse_args()
 
     path, rows = load(args.lang)
-    queue = [
+    candidates = [
         r for r in sorted(rows, key=lambda r: (ORDER.index(r["category"]), r["id"]))
-        if (args.alle or not r["gjennomgatt"])
-        and (args.category is None or r["category"] == args.category)
+        if args.category is None or r["category"] == args.category
     ]
+    if args.utvalg:
+        # Fast frø, så stikkprøven er den samme hver gang og kan dokumenteres.
+        rng = random.Random(0)
+        by_cat = {}
+        for r in candidates:
+            by_cat.setdefault(r["category"], []).append(r)
+        candidates = [r for c in ORDER if c in by_cat
+                      for r in sorted(rng.sample(by_cat[c], min(args.utvalg, len(by_cat[c]))),
+                                      key=lambda r: r["id"])]
+    queue = [r for r in candidates if args.alle or not r["gjennomgatt"]]
     if not queue:
         print("Ingenting å gå gjennom her.")
         return

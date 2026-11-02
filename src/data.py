@@ -9,13 +9,15 @@ Alle loadere returnerer en DataFrame med kolonnene:
 Kildene i TEST_ONLY_SOURCES brukes aldri til trening. De måler hvor godt
 modellen generaliserer til data fra kilder den ikke har sett.
 """
+import random
+import re
 from pathlib import Path
 
 import pandas as pd
 from datasets import load_dataset
 
 COLUMNS = ["text", "label", "source", "split"]
-TEST_ONLY_SOURCES = {"lakera_gandalf", "trustairlab", "dolly"}
+TEST_ONLY_SOURCES = {"lakera_gandalf", "trustairlab", "dolly", "notinject"}
 
 
 def _frame(ds, text_col, labels, source, split):
@@ -82,14 +84,123 @@ def load_dolly():
     return _frame(ds, "instruction", lambda d: pd.Series(0, index=d.index), "dolly", "test")
 
 
+def load_notinject():
+    # Vanlige meldinger med triggerord som «ignore». Måler falske positive.
+    ds = load_dataset("leolee99/NotInject")
+    return pd.concat(
+        _frame(ds[s], "prompt", lambda d: pd.Series(0, index=d.index), "notinject", "test")
+        for s in ds
+    )
+
+
+# Målet i LLMail-Inject var nesten alltid å sende «confirmation» til contact@contact.com.
+# Uten maskering lærer modellen den adressen i stedet for selve manipulasjonen.
+_ADDRESSES = [
+    "anna.berg@firma.example", "it-support@example.com", "post@kommune.example",
+    "j.smith@mailbox.example", "faktura@leverandor.example", "admin@internal.example",
+]
+_WORDS = ["approved", "done", "received", "OK", "status update", "payment details"]
+
+
+def _mask_llmail(text, rng):
+    text = re.sub(r"contact\s*@\s*contact\s*\.\s*com", lambda _: rng.choice(_ADDRESSES), text, flags=re.I)
+    return re.sub(r"\bconfirmation\b", lambda _: rng.choice(_WORDS), text, flags=re.I)
+
+
+def _email(subject, body):
+    return f"Subject: {subject}\n\n{body}".strip()
+
+
+def _llmail_texts(phase):
+    ds = load_dataset("microsoft/llmail-inject-challenge", split=phase)
+    df = ds.select_columns(["subject", "body"]).to_pandas().fillna("")
+    return pd.Series([_email(s, b) for s, b in zip(df["subject"], df["body"])]).drop_duplicates()
+
+
+def _sample_like(pool, target_lengths, seed, bins=10):
+    """Trekker fra pool slik at lengdefordelingen ligner target_lengths."""
+    edges = target_lengths.quantile([i / bins for i in range(bins + 1)]).to_numpy().copy()
+    edges[0], edges[-1] = 0, float("inf")
+    per_bin = len(target_lengths) // bins
+    which = pd.cut(pool.str.len(), edges, labels=False, include_lowest=True)
+    return pd.concat(pool[which == b].sample(per_bin, random_state=seed) for b in range(bins))
+
+
+# Vanskelige vanlige meldinger: ekte eller oversatte instruksjoner som tilfeldigvis
+# inneholder ord som ofte brukes i angrep. Hentes fra uavhengige kilder, ikke skrevet
+# av oss, så de ikke ligner de egne testsettene.
+_TRIGGERS_EN = re.compile(
+    r"\b(?:ignor\w*|forget|disregard|pretend|act as|role[- ]?play|instructions?|rules?|system"
+    r"|prompt|override|bypass|hack\w*|admin\w*|developer|password|secret|reveal"
+    r"|unrestricted|uncensored|unfiltered)\b", re.I)
+_TRIGGERS_NO = re.compile(
+    r"\b(?:ignor\w*|glem\w*|se bort fra|late som|lat som|instruks\w*|regel|regler\w*|system\w*"
+    r"|prompt\w*|overstyr\w*|omgå\w*|hack\w*|admin\w*|utvikler\w*|passord\w*|hemmelig\w*"
+    r"|avslør\w*|rolle\w*)\b", re.I)
+_ATTACK_MARKERS = re.compile(
+    r"\bDAN\b|jailbreak|ignore (?:all |any )?(?:previous|prior|above|your)|no (?:restrictions|rules|filters)"
+    r"|developer mode|disregard (?:all|your|previous)|you are (?:now )?free|unfiltered|uncensored", re.I)
+
+
+def load_hard_negatives_en():
+    """Engelske førstemeldinger fra OpenAssistant (Apache-2.0) med triggerord."""
+    o = load_dataset("OpenAssistant/oasst2", split="train").to_pandas()
+    p = o[(o["role"] == "prompter") & (o["lang"] == "en") & o["parent_id"].isna()]["text"].drop_duplicates()
+    p = p[p.str.contains(_TRIGGERS_EN) & ~p.str.contains(_ATTACK_MARKERS)]
+    return pd.DataFrame({"text": p.tolist(), "label": 0, "source": "oasst2", "split": "train"})
+
+
+def load_hard_negatives_no():
+    """Norske instruksjoner med triggerord fra NbAiLab/norwegian-alpaca (CC-BY-4.0, maskinoversatt)."""
+    n = load_dataset("NbAiLab/norwegian-alpaca", split="train").to_pandas()
+    text = (n["instruction"].fillna("") + "\n\n" + n["input"].fillna("")).str.strip().drop_duplicates()
+    text = text[text.str.contains(_TRIGGERS_NO) & ~text.str.contains(_ATTACK_MARKERS)]
+    return pd.DataFrame({"text": text.tolist(), "label": 0, "source": "norwegian_alpaca", "split": "train"})
+
+
+def load_translated_no(root="."):
+    """Maskinoversatte treningsdata (angrep og vanlige) laget av src/translate.py."""
+    path = Path(root) / "data" / "translated_no.parquet"
+    return pd.read_parquet(path)[COLUMNS]
+
+
+def load_emails(n=4000, n_test=1000, seed=0):
+    """Skjulte instrukser i e-post (LLMail-Inject) og vanlige e-poster (Enron/AESLC) som motvekt.
+
+    Uten vanlige e-poster lærer modellen at «e-post = angrep». LLMail-angrepene trekkes
+    slik at lengdene ligner de vanlige e-postene, så lengde ikke avslører fasiten.
+    Phase1 brukes til trening og Phase2 til test.
+    AESLC-lisensen er oppgitt som ukjent. Enron-korpuset ble offentliggjort av FERC.
+    """
+    rng = random.Random(seed)
+    aeslc = load_dataset("Yale-LILY/aeslc", split="train").to_pandas().drop_duplicates("email_body")
+    aeslc = aeslc.sample(n, random_state=seed)
+    benign = pd.Series([_email(s, b) for s, b in zip(aeslc["subject_line"], aeslc["email_body"])])
+
+    train_attacks = _sample_like(_llmail_texts("Phase1"), benign.str.len(), seed)
+    test_attacks = _llmail_texts("Phase2").sample(n_test, random_state=seed)
+
+    def frame(texts, label, source, split):
+        return pd.DataFrame({"text": list(texts), "label": label, "source": source, "split": split})
+
+    return pd.concat([
+        frame(benign, 0, "aeslc", "train"),
+        frame((_mask_llmail(t, rng) for t in train_attacks), 1, "llmail", "train"),
+        frame((_mask_llmail(t, rng) for t in test_attacks), 1, "llmail_phase2", "test"),
+    ])
+
+
+# load_spml er ikke med: forfatterne fraråder å trene deteksjonsmodeller på SPML,
+# og baselinen ble klart bedre på de egne testsettene uten (se README).
 LOADERS = [
     load_deepset,
     load_jackhhao,
     load_safeguard,
-    load_spml,
     load_lakera_gandalf,
     load_trustairlab,
     load_dolly,
+    load_notinject,
+    load_emails,
 ]
 
 
