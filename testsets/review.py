@@ -9,7 +9,9 @@ Kjør fra prosjektroten:
 
 Taster:
     g  godkjent: fasiten er riktig
-    f  feil fasit: snur label (og label på tvillingen i det andre språket)
+    f  feil fasit: snur label, og gir tvillingen i det andre språket samme label.
+       Kategorien endres ikke. Legg endringen inn i kilder/overstyringer.txt for å
+       sette riktig kategori og dokumentere begrunnelsen.
     m  skriv en merknad og marker som gjennomgått
     h  hopp over (vises igjen neste gang)
     b  tilbake til forrige melding
@@ -62,13 +64,15 @@ def add_note(row, note):
     row["merknad"] = f"{row['merknad']} | {note}" if row["merknad"] else note
 
 
-def flip_twin(lang, pair_id):
+def set_twin_label(lang, pair_id, label):
+    """Gir tvillingen i det andre språket samme fasit og markerer den for ny gjennomgang."""
     other = "en" if lang == "no" else "no"
     path, rows = load(other)
     for row in rows:
-        if row["pair_id"] == pair_id:
-            row["label"] = 1 - row["label"]
-            add_note(row, f"fasit snudd via {lang}-tvillingen, bør sjekkes")
+        if row["pair_id"] == pair_id and row["label"] != label:
+            row["label"] = label
+            row["gjennomgatt"] = False
+            add_note(row, f"fasit endret via {lang}-tvillingen, bør sjekkes")
     save(path, rows)
 
 
@@ -133,8 +137,8 @@ def main():
         elif key == "f":
             row["label"] = 1 - row["label"]
             row["gjennomgatt"] = True
-            add_note(row, "fasit snudd ved gjennomgang")
-            flip_twin(args.lang, row["pair_id"])
+            add_note(row, "fasit snudd ved gjennomgang, legg den inn i kilder/overstyringer.txt")
+            set_twin_label(args.lang, row["pair_id"], row["label"])
         elif key == "m":
             note = input("\nMerknad: ").strip()
             if not note:

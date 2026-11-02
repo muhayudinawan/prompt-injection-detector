@@ -4,6 +4,11 @@ Kjør fra prosjektroten:  python testsets/build.py
 
 Alt er deterministisk, så samme kildefiler gir alltid samme testsett.
 Se docs/retningslinjer.md for hva kategoriene og fasiten betyr.
+
+Fasitendringer etter gjennomgang står i kilder/overstyringer.txt, ikke i kildefilene.
+ID-ene er basert på posisjonen i kildefilene, så ikke flytt eller slett linjer der:
+da får meldingene under nye ID-er og mister gjennomgangsstatusen. Endre heller fasit
+med overstyringer.txt, og legg nye meldinger til nederst i en fil.
 """
 import base64
 import codecs
@@ -117,6 +122,17 @@ def build_documents(docs, injections, harmless):
     return dokument, skjult
 
 
+def read_overrides():
+    """Fasitendringer fra overstyringer.txt: {pair_id: (label, category, begrunnelse)}."""
+    overrides = {}
+    for line in (SRC / "overstyringer.txt").read_text(encoding="utf-8").splitlines():
+        if not line.strip() or line.startswith("#"):
+            continue
+        pair_id, label, category, reason = (p.strip() for p in line.split("|||"))
+        overrides[pair_id] = (int(label), category, reason)
+    return overrides
+
+
 def main():
     direkte = read_pairs("direkte.txt")
     dokument, skjult = build_documents(
@@ -131,6 +147,10 @@ def main():
         "forkledd": read_pairs("forkledd.txt") + derive_forkledd(direkte),
         "skjult": skjult,
     }
+    overrides = read_overrides()
+    all_ids = {f"{c}-{i:03d}" for c, items in categories.items() for i in range(1, len(items) + 1)}
+    unknown = set(overrides) - all_ids
+    assert not unknown, f"Ukjente pair_id i overstyringer.txt: {unknown}"
 
     for lang in LANGS:
         out = HERE / f"{lang}.jsonl"
@@ -157,6 +177,12 @@ def main():
                 old = previous.get(row["id"])
                 if old and old["text"] == row["text"]:
                     row.update({k: old[k] for k in ("label", "gjennomgatt", "merknad")})
+                if pair_id in overrides:
+                    label, new_category, reason = overrides[pair_id]
+                    note = f"fasit overstyrt: {reason}"
+                    if note not in row["merknad"]:
+                        row["merknad"] = f"{row['merknad']} | {note}" if row["merknad"] else note
+                    row.update({"label": label, "category": new_category, "gjennomgatt": True})
                 rows.append(row)
         with out.open("w", encoding="utf-8") as f:
             for row in rows:

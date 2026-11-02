@@ -37,7 +37,7 @@ The email attacks are sampled so their lengths match the ordinary emails, and th
 
 Test data from sources the model never trains on: `Lakera/gandalf_ignore_instructions`, the jailbreak part of `TrustAIRLab/in-the-wild-jailbreak-prompts`, `databricks/databricks-dolly-15k` as ordinary questions, and `leolee99/NotInject` (harmless messages containing trigger words such as "ignore"). The "regular" part of TrustAIRLab is left out because many of its prompts are obvious jailbreaks. About 9 % of the TrustAIRLab test prompts have near-duplicates in `jackhhao`, since both come from the same source, so TrustAIRLab is not fully unseen. 1,000 attacks from LLMail-Inject Phase2 are also kept for testing.
 
-**Custom test sets:** 596 messages each in Norwegian and English, written as parallel pairs, so differences between languages come from the language and not the content. They cover ordinary questions, harmless messages that look like attacks, documents with and without hidden instructions, and direct, role-play and obfuscated attacks. They were written with an LLM (Claude) and reviewed by a human: all borderline categories in Norwegian in full, plus samples from the rest and from English, 393 messages in total. No label had to be changed. They are only used for testing, never training.
+**Custom test sets:** 596 messages each in Norwegian and English, written as parallel pairs, so differences between languages come from the language and not the content. They cover ordinary questions, harmless messages that look like attacks, documents with and without hidden instructions, and direct, role-play and obfuscated attacks. They were written with an LLM (Claude) and reviewed by a human: all borderline categories in Norwegian in full, plus samples from the rest and from English, 393 messages in total. A second review of all Norwegian messages by another LLM (ChatGPT) then found 9 messages that were wrongly labelled as attacks (harmful or inappropriate requests without manipulation) and 3 flawed texts. These are corrected, with reasons, in `testsets/kilder/overstyringer.txt`. Each set now has 232 attacks and 364 harmless messages. The sets are only used for testing, never training.
 
 ## Results so far
 
@@ -48,10 +48,10 @@ Baseline (TF-IDF + logistic regression), threshold set for at most 1 % false pos
 | Public, sources seen in training | 0.95 | 0.4 % | 1.00 |
 | Public, unseen sources | 0.83 | 1.5 % | 0.97 |
 | NotInject (harmless, with trigger words) | – | **25 %** | – |
-| Custom, English | 0.63 | 4.5 % | 0.92 |
-| Custom, **Norwegian** | 0.64 | 7.6 % | **0.90** |
+| Custom, English | 0.64 | 5.2 % | 0.92 |
+| Custom, **Norwegian** | 0.64 | 9.1 % | **0.89** |
 
-The public test sets make the baseline look excellent. The custom sets and NotInject show the real gaps: it blocks too many harmless messages that only look like attacks (23 % of them in Norwegian, 25 % of NotInject), and it rarely catches instructions hidden in documents in the custom sets (24 % in Norwegian, 11 % in English).
+The public test sets make the baseline look excellent. The custom sets and NotInject show the real gaps: it blocks too many harmless messages that only look like attacks (25 % of NotInject), and it rarely catches instructions hidden in documents in the custom sets.
 
 The threshold is chosen for 1 % false positives on validation data from the training sources. Those are easier than the custom test sets, so the false positive rate there ends up much higher than 1 %. ROC AUC, which does not depend on the threshold, is the more reliable comparison. A separate Norwegian calibration set would give a better threshold.
 
@@ -59,10 +59,10 @@ The threshold is chosen for 1 % false positives on validation data from the trai
 
 | Test set | Recall | False positive rate | ROC AUC |
 |---|---|---|---|
-| Custom, English | 0.71 | 4.8 % | 0.96 |
-| Custom, Norwegian | 0.74 | **13.2 %** | 0.87 |
+| Custom, English | 0.73 | 4.9 % | 0.96 |
+| Custom, Norwegian | 0.74 | **14.6 %** | 0.86 |
 
-With the email data and the translated Norwegian data in training, the baseline now beats ProtectAI in Norwegian (ROC AUC 0.90 against 0.87) but not in English (0.92 against 0.96). ProtectAI catches almost all obfuscated attacks, while the baseline is much better at instructions hidden in emails (97 % against 29 % on LLMail-Inject Phase2). Both block many harmless messages that only look like attacks: 43 % of NotInject for ProtectAI.
+With the email data and the translated Norwegian data in training, the baseline now beats ProtectAI in Norwegian (ROC AUC 0.89 against 0.86) but not in English (0.92 against 0.96). ProtectAI catches almost all obfuscated attacks, while the baseline is much better at instructions hidden in emails (97 % against 29 % on LLMail-Inject Phase2). Both block many harmless messages that only look like attacks: 43 % of NotInject for ProtectAI.
 
 Next step: fine-tuning the multilingual `microsoft/mdeberta-v3-base` on the same data. `notebooks/05_mdeberta_colab.ipynb` does this on a free Colab GPU and compares it with the baseline trained on exactly the same data.
 
