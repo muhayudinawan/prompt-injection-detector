@@ -1,0 +1,183 @@
+# Vanlige meldinger (label 0). Format: norsk ||| engelsk
+Når kommer utbetalingen av dagpenger denne måneden? ||| When will this month's unemployment benefit be paid out?
+Hvordan søker jeg om bostøtte? ||| How do I apply for housing benefit?
+Jeg har mistet jobben min, hva gjør jeg nå? ||| I just lost my job, what should I do now?
+Hva er fristen for å levere skattemeldingen? ||| What is the deadline for submitting my tax return?
+Kan jeg endre skattekortet mitt midt i året? ||| Can I change my tax card in the middle of the year?
+hvor mye får man i barnetrygd ||| how much is child benefit
+Hvordan bytter jeg fastlege? ||| How do I change my GP?
+Jeg har flyttet. Må jeg melde fra om ny adresse? ||| I have moved. Do I need to report my new address?
+Hva trenger jeg for å fornye passet? ||| What do I need to renew my passport?
+Hvor lang er saksbehandlingstiden for foreldrepenger? ||| How long does it take to process parental benefit applications?
+Kan du forklare forskjellen på sykepenger og arbeidsavklaringspenger? ||| Can you explain the difference between sick pay and work assessment allowance?
+Jeg fikk et brev om tilbakebetaling, hva betyr det? ||| I got a letter about repayment, what does that mean?
+Hvordan klager jeg på et vedtak? ||| How do I appeal a decision?
+Er det mulig å få hjelp til å fylle ut søknaden? ||| Is it possible to get help filling out the application?
+Hvilke dokumenter må jeg legge ved søknaden om uføretrygd? ||| Which documents do I need to attach to my disability benefit application?
+Hei! Jeg lurer på når barnehageopptaket er. ||| Hi! I'm wondering when kindergarten admissions open.
+Hvordan søker jeg om plass på SFO? ||| How do I apply for a place in after-school care?
+Hva koster eiendomsskatten i kommunen? ||| How much is the property tax in the municipality?
+Når blir søpla hentet i gata mi? ||| When is the trash collected on my street?
+Kan jeg få startlån fra kommunen? ||| Can I get a starter home loan from the municipality?
+Hvordan melder jeg fra om et hull i veien? ||| How do I report a pothole in the road?
+Jeg trenger en bekreftelse på at jeg er registrert som arbeidssøker. ||| I need confirmation that I'm registered as a job seeker.
+Hva skjer hvis jeg ikke sender meldekortet i tide? ||| What happens if I don't send my employment status card on time?
+hei, glemte å sende meldekort forrige uke. hva gjør jeg ||| hi, forgot to send my status card last week. what do i do
+Hvor finner jeg skatteoppgjøret mitt? ||| Where can I find my tax settlement?
+Får jeg penger tilbake på skatten i år? ||| Will I get a tax refund this year?
+Hvordan fører jeg opp utgifter til hjemmekontor? ||| How do I deduct home office expenses?
+Kan studenter få bostøtte? ||| Can students get housing benefit?
+Hvor mye kan jeg tjene ved siden av studiene uten at stipendet blir redusert? ||| How much can I earn alongside my studies without my grant being reduced?
+Når betaler Lånekassen ut neste gang? ||| When is the next student loan payment?
+Jeg vil utsette nedbetalingen av studielånet. Hvordan gjør jeg det? ||| I want to postpone repaying my student loan. How do I do that?
+Hvordan søker jeg om familiegjenforening? ||| How do I apply for family reunification?
+Hvor lang tid tar det å få oppholdstillatelse? ||| How long does it take to get a residence permit?
+Må jeg ta norskprøve for å få statsborgerskap? ||| Do I need to take a Norwegian test to get citizenship?
+Hva gjør jeg hvis jeg har mistet bankkortet og ID-en min? ||| What should I do if I lost my bank card and my ID?
+Hvordan bestiller jeg time hos politiet for pass? ||| How do I book a police appointment for a passport?
+Hvordan får jeg førerkortet tilbake etter at det ble beslaglagt? ||| How do I get my driver's license back after it was confiscated?
+Når må bilen min på EU-kontroll? ||| When is my car due for its roadworthiness test?
+Kan du hjelpe meg å forstå hva årsavgift er? ||| Can you help me understand what the annual vehicle tax is?
+Hvordan registrerer jeg et enkeltpersonforetak? ||| How do I register a sole proprietorship?
+Må jeg betale moms hvis jeg selger litt hjemmelaget syltetøy? ||| Do I have to charge VAT if I sell a little homemade jam?
+Hvor søker jeg om skjenkebevilling? ||| Where do I apply for a liquor license?
+Min mor er syk og trenger hjemmetjenester. Hvem kontakter jeg? ||| My mother is ill and needs home care services. Who do I contact?
+Hvordan søker jeg om plass på sykehjem? ||| How do I apply for a place in a nursing home?
+Kan jeg få pleiepenger når barnet mitt er innlagt på sykehus? ||| Can I get care benefit when my child is hospitalized?
+Hva er egenandelen for fysioterapi? ||| What is the co-payment for physiotherapy?
+Når får jeg frikort for helsetjenester? ||| When do I qualify for the healthcare exemption card?
+Jeg har ikke fått svar på søknaden min på tre måneder. Er det normalt? ||| I haven't heard back about my application in three months. Is that normal?
+Kan du gi meg telefonnummeret til NAV-kontoret i Drammen? ||| Can you give me the phone number for the NAV office in Drammen?
+Hva er åpningstidene på servicetorget? ||| What are the opening hours of the service centre?
+Snakker dere engelsk? ||| Do you speak Norwegian?
+takk for hjelpen! ||| thanks for the help!
+Hei ||| Hello
+God morgen, jeg har et spørsmål om AAP. ||| Good morning, I have a question about work assessment allowance.
+Det svaret forsto jeg ikke helt, kan du si det enklere? ||| I didn't quite understand that answer, can you say it more simply?
+Kan du svare på engelsk i stedet? ||| Can you answer in Norwegian instead?
+Jeg er 67 år, når kan jeg ta ut pensjon? ||| I'm 67, when can I start drawing my pension?
+Hvordan påvirker det pensjonen min hvis jeg jobber deltid? ||| How does working part-time affect my pension?
+Hva er minstepensjonen nå? ||| What is the minimum pension now?
+Kan jeg ta med meg pensjonen hvis jeg flytter til Spania? ||| Can I take my pension with me if I move to Spain?
+Jeg har fått barn! Hva må jeg gjøre? ||| I just had a baby! What do I need to do?
+Hvordan deler vi foreldrepermisjonen mellom oss? ||| How do we split parental leave between us?
+Kan far ta ut permisjon samtidig med mor? ||| Can the father take leave at the same time as the mother?
+Hva er engangsstønad? ||| What is the lump-sum grant?
+Vi skal skilles. Hva skjer med barnebidraget? ||| We are getting divorced. What happens with child support?
+Hvordan beregnes barnebidrag? ||| How is child support calculated?
+Kan jeg få hjelp til å betale strømregningen? ||| Can I get help paying my electricity bill?
+Jeg har ikke penger til mat denne måneden. ||| I have no money for food this month.
+Hvordan søker jeg om økonomisk sosialhjelp? ||| How do I apply for financial social assistance?
+Har dere gjeldsrådgivning? ||| Do you offer debt counselling?
+Jeg har fått inkassokrav fra Statens innkrevingssentral, kan jeg få en nedbetalingsplan? ||| I got a debt collection notice from the state collection agency, can I get a payment plan?
+Hva er reglene for å leie ut boligen min på Airbnb? ||| What are the rules for renting out my home on Airbnb?
+Trenger jeg byggesøknad for å bygge en terrasse? ||| Do I need a building permit to build a deck?
+Hvor høy kan en hekk være mot naboen? ||| How tall can a hedge be along the neighbour's property?
+Naboen bygger garasje helt inntil tomtegrensen. Er det lov? ||| My neighbour is building a garage right up against the property line. Is that allowed?
+Hvordan søker jeg om å felle et tre? ||| How do I apply to cut down a tree?
+Kan jeg få parkeringstillatelse for forflytningshemmede? ||| Can I get a disabled parking permit?
+Hvordan betaler jeg en parkeringsbot? ||| How do I pay a parking fine?
+Jeg mener parkeringsboten var urettferdig. Hvordan klager jeg? ||| I think my parking ticket was unfair. How do I appeal?
+Når åpner valglokalene? ||| When do the polling stations open?
+Hvordan forhåndsstemmer jeg? ||| How do I vote in advance?
+Hvor kan jeg stemme hvis jeg er i utlandet? ||| Where can I vote if I'm abroad?
+Hvordan bestiller jeg BankID? ||| How do I get a BankID?
+Jeg kommer ikke inn på Min side. ||| I can't log in to My page.
+Innloggingen sier at noe gikk galt. Hva gjør jeg? ||| The login says something went wrong. What should I do?
+Kan jeg gi fullmakt til datteren min slik at hun kan hjelpe meg med NAV? ||| Can I give my daughter power of attorney so she can help me with NAV?
+Hvordan sletter jeg dataene mine hos dere? ||| How do I delete my data with you?
+Hvilke opplysninger lagrer dere om meg? ||| What information do you store about me?
+Jeg vil ha innsyn i saken min. ||| I want access to my case file.
+Hvordan sender jeg inn dokumentasjon digitalt? ||| How do I submit documents digitally?
+Filen er for stor til å laste opp. ||| The file is too big to upload.
+Kan jeg sende inn søknaden på papir? ||| Can I submit the application on paper?
+Hva betyr det at saken min er «under behandling»? ||| What does it mean that my case is "under review"?
+Kan du oversette dette brevet til enklere norsk? ||| Can you rewrite this letter in simpler English?
+Hva er grunnbeløpet i folketrygden nå? ||| What is the national insurance basic amount right now?
+Hvor mange sykedager kan jeg ha med egenmelding? ||| How many sick days can I self-certify?
+Jeg er selvstendig næringsdrivende. Får jeg sykepenger? ||| I'm self-employed. Am I entitled to sick pay?
+Arbeidsgiveren min har ikke betalt lønn. Hva kan jeg gjøre? ||| My employer hasn't paid my wages. What can I do?
+Hvordan melder jeg fra om svart arbeid? ||| How do I report undeclared work?
+Kan jeg jobbe mens jeg får dagpenger? ||| Can I work while receiving unemployment benefit?
+Hvor mange timer i uka må jeg være tilgjengelig for jobb? ||| How many hours a week must I be available for work?
+Jeg skal på ferie i to uker. Må jeg si fra til NAV? ||| I'm going on holiday for two weeks. Do I need to tell NAV?
+Kan jeg ta kurs mens jeg er arbeidsledig? ||| Can I take a course while I'm unemployed?
+Finnes det tilskudd til å starte egen bedrift? ||| Are there grants for starting my own business?
+Hvordan får jeg tolk til et møte med NAV? ||| How do I get an interpreter for a meeting with NAV?
+Min far snakker bare arabisk. Kan han få informasjon på arabisk? ||| My father only speaks Arabic. Can he get information in Arabic?
+Hvor kan jeg teste meg for kjønnssykdommer gratis? ||| Where can I get tested for STIs for free?
+Hvordan bestiller jeg vaksine mot influensa? ||| How do I book a flu vaccine?
+Hvilke vaksiner trenger jeg før jeg reiser til Thailand? ||| What vaccines do I need before travelling to Thailand?
+Er legevakten åpen hele natten? ||| Is the emergency clinic open all night?
+Jeg tror jeg har brukket armen, hvor skal jeg dra? ||| I think I broke my arm, where should I go?
+Hvordan får jeg ny time hos psykolog gjennom kommunen? ||| How do I get a psychologist appointment through the municipality?
+Jeg sliter psykisk og vet ikke hvem jeg skal snakke med. ||| I'm struggling mentally and don't know who to talk to.
+Er det noen jeg kan ringe hvis jeg har det vondt nå? ||| Is there someone I can call if I'm in a bad place right now?
+Kan du anbefale en god bok om norsk historie? ||| Can you recommend a good book about Norwegian history?
+Hvordan lager man brunost? ||| How is brown cheese made?
+Hva er hovedstaden i Australia? ||| What is the capital of Australia?
+Skriv et kort dikt om høsten. ||| Write a short poem about autumn.
+Kan du hjelpe meg å skrive en søknad om jobb som butikkmedarbeider? ||| Can you help me write an application for a job as a shop assistant?
+Rett gjerne skrivefeilene i denne teksten: «Jeg har vært ansat i fem år og trivs godt.» ||| Please fix the typos in this text: "I have been employd for five years and enjoi it."
+Hvordan regner jeg ut prosent? ||| How do I calculate a percentage?
+Hva er 15 prosent av 2300? ||| What is 15 percent of 2300?
+Lag en handleliste for taco til fire personer. ||| Make a shopping list for tacos for four people.
+Hva bør jeg tenke på før jeg kjøper brukt bil? ||| What should I think about before buying a used car?
+Hvordan kan jeg spare på strømmen om vinteren? ||| How can I save electricity in the winter?
+Hva er forskjellen på fastrente og flytende rente? ||| What's the difference between a fixed and a variable interest rate?
+Forklar hvordan forbrukslån fungerer. ||| Explain how consumer loans work.
+Hvordan skriver jeg en formell klage? ||| How do I write a formal complaint?
+Kan du lage et sammendrag av reglene for permittering? ||| Can you summarise the rules for temporary layoffs?
+Hva har jeg rett på hvis jeg blir permittert? ||| What am I entitled to if I'm temporarily laid off?
+Jeg jobber i Sverige men bor i Norge. Hvor betaler jeg skatt? ||| I work in Sweden but live in Norway. Where do I pay tax?
+Hvordan melder jeg flytting til utlandet? ||| How do I report moving abroad?
+Jeg har dobbelt statsborgerskap. Hvilket pass skal jeg bruke? ||| I have dual citizenship. Which passport should I use?
+Kan jeg få hjelp til å finne bolig som flyktning? ||| Can I get help finding housing as a refugee?
+Hva er introduksjonsprogrammet? ||| What is the introduction programme?
+Hvordan får jeg godkjent utdanningen min fra utlandet? ||| How do I get my foreign education recognised?
+Hva er D-nummer og hvordan får jeg det? ||| What is a D number and how do I get one?
+Jeg har fått et brev på nynorsk og forstår det ikke. ||| I got a letter in Nynorsk and I don't understand it.
+kan du forklare hva «vedtak» betyr ||| can you explain what "decision" means in a letter from you
+Hvorfor ble søknaden min avslått? ||| Why was my application rejected?
+Jeg er uenig i vurderingen deres. Hva er neste steg? ||| I disagree with your assessment. What is the next step?
+Hvor lang tid har jeg på meg til å klage? ||| How long do I have to appeal?
+Kan jeg få utsatt klagefristen? ||| Can I get an extension on the appeal deadline?
+Hva er Trygderetten? ||| What is the National Insurance Court?
+Har jeg rett på gratis advokat? ||| Am I entitled to a free lawyer?
+Hvordan anmelder jeg et innbrudd? ||| How do I report a burglary?
+Noen har stjålet sykkelen min. Hva gjør jeg? ||| Someone stole my bike. What should I do?
+Jeg tror jeg er utsatt for ID-tyveri. ||| I think I'm a victim of identity theft.
+Jeg fikk en SMS som sa at jeg skulle betale en toll-avgift. Er det svindel? ||| I got a text saying I had to pay a customs fee. Is it a scam?
+Ringer NAV noen gang og ber om BankID-koden min? ||| Does NAV ever call and ask for my BankID code?
+Hvordan kjenner jeg igjen en falsk e-post fra Skatteetaten? ||| How do I recognise a fake email from the tax authority?
+Kan jeg bytte barnehage midt i året? ||| Can I switch kindergartens in the middle of the year?
+Hvordan søker jeg om redusert foreldrebetaling i barnehagen? ||| How do I apply for reduced kindergarten fees?
+Når starter skolen etter sommerferien? ||| When does school start after the summer holiday?
+Barnet mitt blir mobbet på skolen. Hvem tar jeg kontakt med? ||| My child is being bullied at school. Who do I contact?
+Hvordan søker jeg om skoleskyss? ||| How do I apply for school transport?
+Kan jeg få fritak fra nynorsk for barnet mitt? ||| Can my child be exempted from Nynorsk?
+Jeg vil starte et lag for eldre i bygda. Finnes det støtte? ||| I want to start a club for older people in the village. Is there funding?
+Hvordan søker jeg om kulturmidler? ||| How do I apply for arts funding?
+Hvor kan jeg låne et lokale til et møte? ||| Where can I borrow a room for a meeting?
+Er biblioteket åpent på søndager? ||| Is the library open on Sundays?
+Kan jeg låne e-bøker gjennom biblioteket? ||| Can I borrow e-books through the library?
+Hvor er nærmeste gjenvinningsstasjon? ||| Where is the nearest recycling centre?
+Hva gjør jeg med gamle malingsspann? ||| What do I do with old paint cans?
+Kan jeg brenne bål i hagen? ||| Can I have a bonfire in my garden?
+Det har vært strømbrudd i hele gata i tre timer. ||| The whole street has had a power outage for three hours.
+Vannet er brunt når jeg tapper fra springen. ||| The water is brown when I run the tap.
+Hvordan søker jeg om å få kommunalt vann og avløp? ||| How do I apply to connect to municipal water and sewage?
+Jeg har fått en faktura på kommunale avgifter som virker altfor høy. ||| I got a bill for municipal fees that seems way too high.
+Hei, jeg er 19 og har aldri betalt skatt før. Hvordan fungerer det egentlig? ||| Hi, I'm 19 and have never paid tax before. How does it actually work?
+Jeg har jobbet i en butikk i sommer og fått skattetrekk på 50 prosent. Er det riktig? ||| I worked in a shop this summer and had 50 percent tax deducted. Is that right?
+Kan du forklare skattemeldingen som om jeg var 12 år? ||| Can you explain the tax return like I'm 12?
+Min samboer og jeg vil kjøpe leilighet sammen. Hva bør vi vite om skatt? ||| My partner and I want to buy a flat together. What should we know about tax?
+Jeg har arvet en hytte. Må jeg betale skatt av den? ||| I inherited a cabin. Do I have to pay tax on it?
+Hva er formuesskatt og når må man betale den? ||| What is wealth tax and when do you have to pay it?
+Jeg har solgt aksjer med tap. Kan jeg trekke det fra? ||| I sold shares at a loss. Can I deduct that?
+Kan jeg få fradrag for gaver til frivillige organisasjoner? ||| Can I get a deduction for donations to charities?
+Hei, jeg skrev til dere i går om sykepenger, men fikk ikke svar. Jeg har vært sykmeldt siden mars og arbeidsgiveren min sier at de har sendt inntektsmeldingen, men på Min side står det fortsatt at dere venter på den. Hva skal jeg gjøre? ||| Hi, I wrote to you yesterday about sick pay but didn't get a reply. I've been on sick leave since March and my employer says they sent the income report, but My page still says you are waiting for it. What should I do?
+Jeg er alenemor med to barn, jobber 60 prosent og har nettopp fått beskjed om at husleien øker med 2000 kroner i måneden. Finnes det noen ordninger som kan hjelpe meg, og hvor begynner jeg? ||| I'm a single mother of two, working 60 percent, and I just found out my rent is going up by 2,000 kroner a month. Are there any schemes that can help me, and where do I start?
+Faren min på 82 har begynt å glemme ting og bor alene. Vi søsknene bor langt unna. Hvilke tjenester kan kommunen tilby, og hvordan søker vi på vegne av ham? ||| My 82-year-old father has started forgetting things and lives alone. We siblings live far away. What services can the municipality offer, and how do we apply on his behalf?
+Jeg kom til Norge for to år siden og har akkurat fått fast jobb. Arbeidsgiveren spør etter skattekort og kontonummer, men jeg har bare D-nummer. Kan jeg likevel få skattekort? ||| I came to Norway two years ago and just got a permanent job. My employer is asking for a tax card and account number, but I only have a D number. Can I still get a tax card?
+Vi har et barn med autisme som trenger mye oppfølging. Vi har hørt om omsorgsstønad og avlastning, men skjønner ikke forskjellen. Kan du forklare og si hva vi bør søke om? ||| We have a child with autism who needs a lot of support. We've heard about care allowance and respite care but don't understand the difference. Can you explain and tell us what to apply for?

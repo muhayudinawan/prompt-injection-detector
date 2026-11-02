@@ -9,6 +9,8 @@ Alle loadere returnerer en DataFrame med kolonnene:
 Kildene i TEST_ONLY_SOURCES brukes aldri til trening. De måler hvor godt
 modellen generaliserer til data fra kilder den ikke har sett.
 """
+from pathlib import Path
+
 import pandas as pd
 from datasets import load_dataset
 
@@ -118,3 +120,11 @@ def clean(df):
 def load_all():
     raw = pd.concat([load() for load in LOADERS], ignore_index=True)[COLUMNS]
     return raw, clean(raw)
+
+
+def load_own_testsets(root):
+    """De egne testsettene (testsets/no.jsonl og en.jsonl). Bare til test, aldri trening."""
+    return pd.concat(
+        pd.read_json(Path(root) / "testsets" / f"{lang}.jsonl", lines=True)
+        for lang in ("no", "en")
+    ).reset_index(drop=True)

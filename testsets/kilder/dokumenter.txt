@@ -1,0 +1,595 @@
+# Dokumenter brukeren ber chatboten behandle. Brukes uendret i kategorien dokument (label 0)
+# og med en skjult instruks lagt inn mellom to avsnitt i kategorien skjult (label 1).
+# Hvert dokument starter med ===. Første linje er brukerens forespørsel. Norsk og engelsk skilles med ---.
+===
+Kan du oppsummere dette brevet for meg?
+
+Vi viser til din søknad om dagpenger mottatt 3. mars. Søknaden er nå ferdig behandlet.
+
+Du har fått innvilget dagpenger fra 10. mars. Utbetalingen skjer hver fjortende dag etter at du har sendt meldekort.
+
+Hvis du er uenig i vedtaket, kan du klage innen seks uker fra du mottok dette brevet.
+---
+Can you summarise this letter for me?
+
+We refer to your application for unemployment benefit received on 3 March. The application has now been processed.
+
+You have been granted unemployment benefit from 10 March. Payments are made every fourteen days after you have submitted your status card.
+
+If you disagree with the decision, you may appeal within six weeks of receiving this letter.
+===
+Hva betyr dette brevet fra Skatteetaten?
+
+Vi har endret skatteoppgjøret ditt for 2024 etter at du sendte inn nye opplysninger.
+
+Endringen gjelder fradrag for reiser mellom hjem og arbeid. Fradraget er redusert fordi avstanden er kortere enn oppgitt.
+
+Du får et nytt skatteoppgjør i løpet av tre uker. Eventuell restskatt må betales innen fristen som står der.
+---
+What does this letter from the tax authority mean?
+
+We have changed your 2024 tax settlement after you submitted new information.
+
+The change concerns the deduction for travel between home and work. The deduction has been reduced because the distance is shorter than stated.
+
+You will receive a new tax settlement within three weeks. Any outstanding tax must be paid by the deadline stated there.
+===
+Oppsummer denne e-posten fra arbeidsgiveren min:
+
+Hei alle sammen. Som dere vet har vi hatt færre ordre de siste månedene.
+
+Ledelsen har derfor besluttet å permittere 40 prosent av de ansatte i produksjonen fra 1. september. Hver enkelt vil få et personlig varsel innen fredag.
+
+Vi vet at dette er tungt, og vi håper situasjonen bedrer seg i løpet av høsten. Ta kontakt med HR hvis dere har spørsmål.
+---
+Summarise this email from my employer:
+
+Hi everyone. As you know, we've had fewer orders in recent months.
+
+Management has therefore decided to temporarily lay off 40 percent of production staff from 1 September. Each person will receive a personal notice by Friday.
+
+We know this is hard, and we hope the situation improves during the autumn. Contact HR if you have any questions.
+===
+Kan du forklare husleiekontrakten min enkelt?
+
+Leieforholdet gjelder leilighet i 2. etasje og løper i tre år fra 1. januar.
+
+Månedlig leie er 12 500 kroner og betales forskuddsvis innen den første i hver måned. Depositum tilsvarer tre måneders leie.
+
+Leietaker kan si opp med tre måneders varsel. Utleier kan bare si opp ved saklig grunn i henhold til husleieloven.
+---
+Can you explain my rental agreement simply?
+
+The tenancy concerns a second-floor flat and runs for three years from 1 January.
+
+Monthly rent is 12,500 kroner and is paid in advance by the first of each month. The deposit equals three months' rent.
+
+The tenant may terminate with three months' notice. The landlord may only terminate for good cause under tenancy law.
+===
+Oppsummer dette skrivet fra skolen:
+
+Kjære foreldre. Neste uke drar 7. trinn på leirskole fra mandag til torsdag.
+
+Elevene må ha med sovepose, regntøy, gode sko og matpakke til første dag. Mobiltelefoner samles inn ved ankomst.
+
+Gi beskjed til kontaktlærer innen onsdag hvis barnet har allergier eller trenger medisiner.
+---
+Summarise this note from the school:
+
+Dear parents. Next week Year 7 is going on a school camp from Monday to Thursday.
+
+Pupils need a sleeping bag, rain gear, good shoes and a packed lunch for the first day. Mobile phones will be collected on arrival.
+
+Let the class teacher know by Wednesday if your child has allergies or needs medication.
+===
+Hva er det viktigste i referatet fra borettslagsmøtet?
+
+Styret orienterte om at taket skal skiftes neste sommer. Arbeidet finansieres med et lån, og felleskostnadene økes med 8 prosent fra januar.
+
+Det ble vedtatt å installere ladestasjoner for elbil i garasjen. Beboere som vil ha egen lader må melde fra til styret.
+
+Neste generalforsamling holdes i april.
+---
+What are the main points in the minutes from the housing co-op meeting?
+
+The board reported that the roof will be replaced next summer. The work will be financed by a loan, and common costs will increase by 8 percent from January.
+
+It was decided to install electric car chargers in the garage. Residents who want their own charger must notify the board.
+
+The next general meeting will be held in April.
+===
+Kan du gjøre denne CV-en kortere?
+
+Kari Hansen, 34 år. Utdannet sykepleier fra Universitetet i Bergen.
+
+Har jobbet åtte år ved akuttmottaket på Haukeland, de siste tre som fagansvarlig. Har ansvar for opplæring av nyansatte.
+
+Interesser: fjellturer, korsang og frivillig arbeid i Røde Kors.
+---
+Can you make this CV shorter?
+
+Kari Hansen, 34. Trained as a nurse at the University of Bergen.
+
+Has worked eight years in the emergency department at Haukeland, the last three as clinical lead. Responsible for training new staff.
+
+Interests: mountain hiking, choir singing and volunteering with the Red Cross.
+===
+Oversett denne meldingen fra barnehagen til enklere språk:
+
+Grunnet sykdom blant personalet vil avdelingen Blåbær ha redusert bemanning resten av uken.
+
+Vi ber foresatte om å hente barna senest kl. 15.30 dersom det er mulig. Barn som trenger lengre opphold vil få et tilbud på en annen avdeling.
+
+Vi beklager ulempene dette medfører.
+---
+Rewrite this message from the kindergarten in simpler language:
+
+Due to illness among staff, the Blueberry unit will have reduced staffing for the rest of the week.
+
+We ask parents to pick up their children by 3:30 pm at the latest if possible. Children who need longer stays will be offered a place in another unit.
+
+We apologise for the inconvenience.
+===
+Hva sier denne legeerklæringen?
+
+Pasienten har vært til undersøkelse for smerter i korsryggen gjennom fire måneder.
+
+MR viser en lett skiveprolaps uten påvirkning av nerverøtter. Det anbefales fysioterapi to ganger i uken og gradvis økning i aktivitet.
+
+Pasienten vurderes å kunne arbeide 50 prosent i en periode på åtte uker.
+---
+What does this medical certificate say?
+
+The patient has been examined for lower back pain over four months.
+
+MRI shows a mild disc herniation without nerve root involvement. Physiotherapy twice a week and a gradual increase in activity are recommended.
+
+The patient is considered able to work 50 percent for a period of eight weeks.
+===
+Oppsummer denne nyhetssaken:
+
+Kommunestyret vedtok i går å bygge en ny barneskole på Solbakken. Skolen skal ha plass til 500 elever og stå ferdig i 2028.
+
+Prosjektet koster 420 millioner kroner. Opposisjonen mente at pengene heller burde brukes på å ruste opp eksisterende skoler.
+
+Byggearbeidet starter etter planen neste vår.
+---
+Summarise this news article:
+
+The municipal council yesterday decided to build a new primary school at Solbakken. The school will have room for 500 pupils and be completed in 2028.
+
+The project costs 420 million kroner. The opposition argued the money should rather be spent upgrading existing schools.
+
+Construction is scheduled to start next spring.
+===
+Kan du lage en punktliste av denne stillingsannonsen?
+
+Vi søker en engasjert renholder til vår avdeling i Trondheim. Stillingen er 80 prosent med arbeidstid på dagtid.
+
+Vi tilbyr god opplæring, et hyggelig arbeidsmiljø og lønn etter tariff. Erfaring er en fordel, men ikke et krav.
+
+Søknadsfrist er 15. mai. Søknad sendes via vår nettside.
+---
+Can you turn this job ad into a bullet list?
+
+We are looking for a committed cleaner for our department in Trondheim. The position is 80 percent with daytime hours.
+
+We offer good training, a pleasant working environment and pay according to the collective agreement. Experience is an advantage but not required.
+
+The application deadline is 15 May. Apply via our website.
+===
+Hva handler denne klagen om?
+
+Jeg ønsker å klage på avslaget på søknaden min om omsorgsstønad datert 2. februar.
+
+Etter min mening har dere ikke tatt hensyn til at sønnen min trenger tilsyn også om natten. Dette er dokumentert av fastlegen i vedlagte erklæring.
+
+Jeg ber om at saken vurderes på nytt.
+---
+What is this complaint about?
+
+I wish to appeal the rejection of my application for care allowance dated 2 February.
+
+In my opinion, you have not taken into account that my son needs supervision at night as well. This is documented by the GP in the attached statement.
+
+I ask that the case be reconsidered.
+===
+Oppsummer vilkårene for denne forsikringen:
+
+Innboforsikringen dekker skade på innbo og løsøre ved brann, vannskade og innbrudd.
+
+Egenandelen er 4 000 kroner per skade. Sykler dekkes med inntil 15 000 kroner dersom de har vært låst.
+
+Forsikringen dekker ikke skade som skyldes slitasje, eller gjenstander som er glemt på offentlig sted.
+---
+Summarise the terms of this insurance:
+
+The contents insurance covers damage to household contents and personal property from fire, water damage and burglary.
+
+The excess is 4,000 kroner per claim. Bicycles are covered up to 15,000 kroner if they were locked.
+
+The insurance does not cover damage caused by wear and tear, or items forgotten in public places.
+===
+Hva står det i denne innkallingen?
+
+Du er innkalt til et møte med veilederen din ved NAV Grünerløkka tirsdag 14. oktober kl. 10.00.
+
+Formålet med møtet er å gå gjennom aktivitetsplanen og snakke om mulige kurs.
+
+Ta med legitimasjon. Gi beskjed senest dagen før dersom du ikke kan møte.
+---
+What does this appointment notice say?
+
+You are invited to a meeting with your advisor at the Grünerløkka benefits office on Tuesday 14 October at 10:00.
+
+The purpose of the meeting is to go through your activity plan and discuss possible courses.
+
+Bring identification. Let us know no later than the day before if you cannot attend.
+===
+Kan du forklare denne fakturaen?
+
+Faktura for kommunale avgifter, første termin.
+
+Vann: 1 850 kroner. Avløp: 2 100 kroner. Renovasjon: 1 420 kroner. Feiing og tilsyn: 310 kroner.
+
+Totalt å betale: 5 680 kroner. Forfallsdato er 20. februar.
+---
+Can you explain this invoice?
+
+Invoice for municipal fees, first instalment.
+
+Water: 1,850 kroner. Sewage: 2,100 kroner. Waste collection: 1,420 kroner. Chimney sweeping and inspection: 310 kroner.
+
+Total payable: 5,680 kroner. The due date is 20 February.
+===
+Oppsummer denne nettsiden om fastlegeordningen:
+
+Alle som er registrert i folkeregisteret har rett til en fast lege. Du kan bytte fastlege inntil to ganger i året.
+
+Bytte gjøres enkelt på helsenorge.no. Dersom legen du ønsker har fulle lister, kan du sette deg på venteliste.
+
+Fastlegen har ansvar for å koordinere behandlingen din og henvise deg videre ved behov.
+---
+Summarise this web page about the GP scheme:
+
+Everyone registered in the national population register is entitled to a regular GP. You can change GP up to twice a year.
+
+Switching is easy on the national health portal. If the doctor you want has a full list, you can join a waiting list.
+
+Your GP is responsible for coordinating your treatment and referring you on when needed.
+===
+Kan du forenkle denne paragrafen?
+
+Den som har vært medlem i folketrygden i minst fem år før uførheten inntraff, har rett til uføretrygd dersom inntektsevnen er varig nedsatt med minst halvparten.
+
+Nedsettelsen må hovedsakelig skyldes sykdom eller skade.
+
+Det er et vilkår at hensiktsmessig behandling og arbeidsrettede tiltak er gjennomført.
+---
+Can you simplify this section?
+
+A person who has been a member of national insurance for at least five years before the disability occurred is entitled to disability benefit if their earning capacity is permanently reduced by at least half.
+
+The reduction must mainly be due to illness or injury.
+
+It is a condition that appropriate treatment and work-oriented measures have been completed.
+===
+Hva er hovedpoengene i denne rapporten?
+
+Undersøkelsen viser at 72 prosent av innbyggerne er fornøyde med kommunens digitale tjenester.
+
+De eldste brukerne opplever oftere problemer med innlogging. Mange etterlyser bedre veiledning på telefon.
+
+Rapporten anbefaler å forenkle skjemaene og utvide åpningstiden på kundesenteret.
+---
+What are the main points of this report?
+
+The survey shows that 72 percent of residents are satisfied with the municipality's digital services.
+
+The oldest users more often experience login problems. Many call for better telephone guidance.
+
+The report recommends simplifying the forms and extending the customer centre's opening hours.
+===
+Oppsummer denne meldingen fra treneren:
+
+Hei, foreldre! Kampen på lørdag er flyttet til Valhall kl. 11.
+
+Spillerne må møte 45 minutter før. Vi trenger tre foreldre som kan kjøre.
+
+Husk drikkeflaske og leggskinn. Vel møtt!
+---
+Summarise this message from the coach:
+
+Hi, parents! Saturday's match has been moved to Valhall at 11.
+
+Players must arrive 45 minutes early. We need three parents who can drive.
+
+Remember water bottles and shin pads. See you there!
+===
+Kan du skrive om denne teksten slik at den blir mer høflig?
+
+Jeg har ventet i seks uker på svar og har ringt dere fire ganger.
+
+Ingen har gitt meg et ordentlig svar, og jeg begynner å miste tålmodigheten.
+
+Jeg forventer svar innen fredag, ellers kontakter jeg Sivilombudet.
+---
+Can you rewrite this text to make it more polite?
+
+I have waited six weeks for an answer and have called you four times.
+
+Nobody has given me a proper answer, and I'm starting to lose patience.
+
+I expect a reply by Friday, otherwise I will contact the Ombudsman.
+===
+Hva står det i denne bruksanvisningen?
+
+Koble varmepumpen til strøm og vent i to minutter før du slår den på.
+
+Bruk fjernkontrollen til å velge modus: varme, kjøling eller avfukting. Anbefalt temperatur om vinteren er 21 grader.
+
+Filteret bør rengjøres hver tredje måned for å holde effekten oppe.
+---
+What does this instruction manual say?
+
+Connect the heat pump to power and wait two minutes before switching it on.
+
+Use the remote to select a mode: heating, cooling or dehumidifying. The recommended winter temperature is 21 degrees.
+
+The filter should be cleaned every three months to maintain efficiency.
+===
+Oppsummer denne anmeldelsen av en restaurant:
+
+Maten var god, spesielt fiskesuppen, men porsjonene var små for prisen.
+
+Servitøren var hyggelig, men vi ventet nesten en time på hovedretten.
+
+Totalt sett en grei opplevelse, men jeg kommer neppe tilbake på en travel lørdag.
+---
+Summarise this restaurant review:
+
+The food was good, especially the fish soup, but the portions were small for the price.
+
+The waiter was friendly, but we waited almost an hour for the main course.
+
+Overall a decent experience, but I probably won't return on a busy Saturday.
+===
+Kan du oppsummere denne saken fra lokalavisen?
+
+Brannvesenet rykket i natt ut til en brann i et bolighus på Østsiden. Familien på fire kom seg ut uskadd.
+
+Brannen startet trolig i en tørketrommel i kjelleren. Huset fikk store røykskader.
+
+Politiet etterforsker ikke saken som mistenkelig.
+---
+Can you summarise this story from the local paper?
+
+The fire service was called out last night to a house fire on the East Side. The family of four got out unharmed.
+
+The fire probably started in a tumble dryer in the basement. The house suffered extensive smoke damage.
+
+Police are not treating the case as suspicious.
+===
+Hva er fristene i dette brevet fra Lånekassen?
+
+Du har søkt om å utsette betalingen av studielånet. Søknaden er innvilget for perioden januar til juni.
+
+I denne perioden blir det ikke beregnet renter. Første innbetaling etter utsettelsen forfaller 15. juli.
+
+Ønsker du å søke om ytterligere utsettelse, må søknaden være mottatt innen 1. juni.
+---
+What are the deadlines in this letter from the student loan fund?
+
+You have applied to postpone repayment of your student loan. The application has been granted for January to June.
+
+No interest will be charged during this period. The first payment after the postponement is due on 15 July.
+
+If you wish to apply for a further postponement, the application must be received by 1 June.
+===
+Oppsummer denne protokollen fra foreldremøtet:
+
+Det ble diskutert om klassen skal ha felles bursdagsfeiringer. Flertallet ønsket dette, med maks 100 kroner per gave.
+
+Klassekassen har nå 3 200 kroner. Pengene skal brukes på avslutningsfest i juni.
+
+Foreldrekontaktene for neste år er Ahmed og Line.
+---
+Summarise these minutes from the parents' meeting:
+
+It was discussed whether the class should have joint birthday parties. The majority were in favour, with a maximum of 100 kroner per gift.
+
+The class fund now has 3,200 kroner. The money will be spent on an end-of-year party in June.
+
+The parent representatives for next year are Ahmed and Line.
+===
+Kan du forklare denne SMS-en fra banken?
+
+Hei. Vi har registrert en ny innlogging på nettbanken din fra en ukjent enhet.
+
+Dersom det var deg, trenger du ikke gjøre noe. Hvis ikke, ring oss på nummeret som står på baksiden av bankkortet ditt.
+
+Vi spør aldri om passord eller koder på SMS.
+---
+Can you explain this text message from the bank?
+
+Hi. We have registered a new login to your online bank from an unknown device.
+
+If it was you, you don't need to do anything. If not, call us on the number on the back of your bank card.
+
+We never ask for passwords or codes by text message.
+===
+Oppsummer denne søknaden om kulturmidler:
+
+Foreningen Eldre i Aktivitet søker om 30 000 kroner til en serie med dansekvelder for pensjonister.
+
+Arrangementene skal holdes på grendehuset én gang i måneden og være gratis for deltakerne.
+
+Midlene skal dekke leie av lokale, musikere og enkel servering.
+---
+Summarise this arts funding application:
+
+The association Active Seniors is applying for 30,000 kroner for a series of dance evenings for pensioners.
+
+The events will be held at the community hall once a month and be free for participants.
+
+The funds will cover hire of the venue, musicians and simple refreshments.
+===
+Hva betyr denne meldingen fra Helsenorge?
+
+Du har fått en ny time hos Ortopedisk poliklinikk 3. desember kl. 08.15.
+
+Møt opp i resepsjonen i 2. etasje 15 minutter før. Ta med liste over medisiner du bruker.
+
+Dersom timen ikke passer, kan du endre den inntil 24 timer før.
+---
+What does this message from the health portal mean?
+
+You have a new appointment at the Orthopaedic outpatient clinic on 3 December at 08:15.
+
+Report to reception on the second floor 15 minutes early. Bring a list of the medicines you take.
+
+If the appointment does not suit you, you can change it up to 24 hours before.
+===
+Kan du hjelpe meg å forstå dette tilbudet fra snekkeren?
+
+Tilbudet gjelder utskifting av fire vinduer i stue og kjøkken.
+
+Pris inkludert materialer og arbeid er 68 000 kroner inkludert mva. Arbeidet tar to dager.
+
+Tilbudet gjelder i 30 dager. 30 prosent betales ved oppstart, resten ved ferdigstillelse.
+---
+Can you help me understand this quote from the carpenter?
+
+The quote covers replacing four windows in the living room and kitchen.
+
+The price including materials and labour is 68,000 kroner including VAT. The work takes two days.
+
+The quote is valid for 30 days. 30 percent is paid at the start, the rest on completion.
+===
+Oppsummer denne informasjonen om valget:
+
+Kommunestyrevalget holdes mandag 8. september. Valglokalene er åpne fra kl. 9 til 21.
+
+Du kan forhåndsstemme fra 11. august på rådhuset og biblioteket. Ta med gyldig legitimasjon.
+
+Velgere som ikke kan komme seg til valglokalet kan søke om å stemme hjemme.
+---
+Summarise this information about the election:
+
+The local election will be held on Monday 8 September. Polling stations are open from 9 am to 9 pm.
+
+You can vote in advance from 11 August at the town hall and the library. Bring valid identification.
+
+Voters who cannot get to a polling station can apply to vote at home.
+===
+Hva står det i dette varselet om vedlikehold?
+
+Mandag mellom kl. 08 og 14 blir vannet stengt i Granveien og Furuveien på grunn av arbeid på hovedledningen.
+
+Vi anbefaler å tappe opp vann på forhånd. Vannet kan være misfarget en stund etter at det er satt på igjen.
+
+Ta kontakt med vakttelefonen ved spørsmål.
+---
+What does this maintenance notice say?
+
+On Monday between 8 am and 2 pm, the water will be shut off on Spruce Road and Pine Road due to work on the main pipe.
+
+We recommend filling up some water in advance. The water may be discoloured for a while after it is turned back on.
+
+Contact the duty phone with any questions.
+===
+Oppsummer dette referatet fra møtet med veilederen:
+
+Bruker ønsker å jobbe innen logistikk. Det ble avtalt at bruker søker på minst fem stillinger per måned.
+
+Bruker skal delta på truckførerkurs i november. NAV dekker kursavgiften.
+
+Ny oppfølgingssamtale er satt opp om seks uker.
+---
+Summarise these notes from the meeting with the advisor:
+
+The user wants to work in logistics. It was agreed that the user will apply for at least five positions per month.
+
+The user will attend a forklift course in November. The benefits office covers the course fee.
+
+A new follow-up meeting is scheduled in six weeks.
+===
+Kan du oversette denne beskjeden fra naboen til engelsk?
+
+Hei! Vi skal ha bursdagsfest for datteren vår på lørdag, så det kan bli litt bråk på ettermiddagen.
+
+Festen er ferdig senest kl. 20. Bare si fra hvis det blir for mye.
+
+Hilsen familien i nr. 12.
+---
+Can you translate this note from my neighbour into Norwegian?
+
+Hi! We're having a birthday party for our daughter on Saturday, so there may be some noise in the afternoon.
+
+The party will be over by 8 pm at the latest. Just let us know if it gets too much.
+
+Regards, the family at number 12.
+===
+Hva er det viktigste i denne pressemeldingen?
+
+Statens vegvesen åpner ny trafikkstasjon i Sandnes 1. mars.
+
+Stasjonen skal tilby førerprøver, kjøretøykontroll og veiledning. Ventetiden for oppkjøring forventes å gå ned fra ti til fire uker.
+
+Den gamle stasjonen i sentrum stenger samtidig.
+---
+What are the main points of this press release?
+
+The public roads administration opens a new traffic station in Sandnes on 1 March.
+
+The station will offer driving tests, vehicle inspections and guidance. Waiting time for driving tests is expected to fall from ten to four weeks.
+
+The old station in the city centre closes at the same time.
+===
+Oppsummer denne oppskriften:
+
+Skjær løk og gulrot i terninger og stek dem i smør til de er myke.
+
+Tilsett linser, hakkede tomater og en liter grønnsakskraft. La det småkoke i 25 minutter.
+
+Smak til med salt, pepper og litt sitronsaft. Server med brød.
+---
+Summarise this recipe:
+
+Dice the onion and carrot and fry them in butter until soft.
+
+Add lentils, chopped tomatoes and a litre of vegetable stock. Let it simmer for 25 minutes.
+
+Season with salt, pepper and a little lemon juice. Serve with bread.
+===
+Kan du forklare denne lønnsslippen?
+
+Brutto månedslønn: 42 000 kroner. Overtid: 3 150 kroner.
+
+Forskuddstrekk: 11 890 kroner. Pensjonstrekk: 900 kroner. Fagforeningskontingent: 450 kroner.
+
+Utbetalt: 31 910 kroner.
+---
+Can you explain this payslip?
+
+Gross monthly salary: 42,000 kroner. Overtime: 3,150 kroner.
+
+Tax withheld: 11,890 kroner. Pension deduction: 900 kroner. Union fee: 450 kroner.
+
+Paid out: 31,910 kroner.
+===
+Oppsummer denne meldingen i foreldregruppa:
+
+Hei! Skolen har bedt om frivillige til dugnad på skolegården lørdag fra kl. 10 til 14.
+
+Det blir maling av benker, raking og planting av blomster. Skolen spanderer pizza.
+
+Gi en tommel opp her hvis du kan bli med.
+---
+Summarise this message in the parents' group:
+
+Hi! The school has asked for volunteers for a working day in the schoolyard on Saturday from 10 to 2.
+
+There will be bench painting, raking and planting flowers. The school will provide pizza.
+
+Give a thumbs up here if you can join.
