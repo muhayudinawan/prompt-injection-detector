@@ -133,11 +133,17 @@ def main():
     }
 
     for lang in LANGS:
+        out = HERE / f"{lang}.jsonl"
+        previous = {}
+        if out.exists():
+            for line in out.read_text(encoding="utf-8").splitlines():
+                row = json.loads(line)
+                previous[row["id"]] = row
         rows = []
         for category, items in categories.items():
             for i, item in enumerate(items, 1):
                 pair_id = f"{category}-{i:03d}"
-                rows.append({
+                row = {
                     "id": f"{lang}-{pair_id}",
                     "pair_id": pair_id,
                     "text": item[lang],
@@ -146,8 +152,12 @@ def main():
                     "language": lang,
                     "gjennomgatt": False,
                     "merknad": item.get("merknad", ""),
-                })
-        out = HERE / f"{lang}.jsonl"
+                }
+                # Behold gjennomgangen (review.py) for meldinger som ikke er endret.
+                old = previous.get(row["id"])
+                if old and old["text"] == row["text"]:
+                    row.update({k: old[k] for k in ("label", "gjennomgatt", "merknad")})
+                rows.append(row)
         with out.open("w", encoding="utf-8") as f:
             for row in rows:
                 f.write(json.dumps(row, ensure_ascii=False) + "\n")
