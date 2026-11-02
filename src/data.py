@@ -13,7 +13,7 @@ import pandas as pd
 from datasets import load_dataset
 
 COLUMNS = ["text", "label", "source", "split"]
-TEST_ONLY_SOURCES = {"lakera_gandalf", "trustairlab"}
+TEST_ONLY_SOURCES = {"lakera_gandalf", "trustairlab", "dolly"}
 
 
 def _frame(ds, text_col, labels, source, split):
@@ -67,14 +67,17 @@ def load_lakera_gandalf():
 
 
 def load_trustairlab():
-    # "regular" er vanlige prompts fra samme miljøer, og fungerer som vanskelige negativer.
-    return pd.concat(
-        _frame(
-            load_dataset("TrustAIRLab/in-the-wild-jailbreak-prompts", config, split="train"),
-            "prompt", lambda d: d["jailbreak"], "trustairlab", "test",
-        )
-        for config in ("jailbreak_2023_12_25", "regular_2023_12_25")
-    )
+    # Bare jailbreak-delen. "regular"-delen er utelatt fordi mange av promptene
+    # der er tydelige jailbreaks, så fasiten er ikke til å stole på.
+    ds = load_dataset("TrustAIRLab/in-the-wild-jailbreak-prompts", "jailbreak_2023_12_25", split="train")
+    return _frame(ds, "prompt", lambda d: d["jailbreak"], "trustairlab", "test")
+
+
+def load_dolly():
+    # Vanlige spørsmål og oppgaver skrevet av mennesker. Erstatter trustairlab
+    # "regular" som kilde til benigne meldinger fra en ukjent kilde.
+    ds = load_dataset("databricks/databricks-dolly-15k", split="train")
+    return _frame(ds, "instruction", lambda d: pd.Series(0, index=d.index), "dolly", "test")
 
 
 LOADERS = [
@@ -84,6 +87,7 @@ LOADERS = [
     load_spml,
     load_lakera_gandalf,
     load_trustairlab,
+    load_dolly,
 ]
 
 
