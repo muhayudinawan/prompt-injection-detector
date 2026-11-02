@@ -235,16 +235,37 @@ def load_all():
 
 
 def load_training_data(root):
-    """data/combined.parquet pluss de oversatte norske treningsdataene, hvis de finnes.
+    """data/combined.parquet pluss norske treningsdata.
 
-    Oversettelsen lages av src/translate.py etter notebook 01. Uten den mangler
-    treningen norske eksempler, og modellen blir klart dårligere på norsk.
+    De norske dataene er de ChatGPT-skrevne i testsets/treningsdata_no.jsonl og de
+    maskinoversatte fra src/translate.py (kjøres etter notebook 01). Uten dem blir
+    modellen klart dårligere på norsk.
     """
     df = pd.read_parquet(Path(root) / "data" / "combined.parquet")
-    if not (Path(root) / "data" / "translated_no.parquet").exists():
+    parts = [df, load_chatgpt_train_no(root)]
+    if (Path(root) / "data" / "translated_no.parquet").exists():
+        parts.append(load_translated_no(root))
+    else:
         print("Advarsel: data/translated_no.parquet mangler. Kjør src/translate.py for norske treningsdata.")
-        return df
-    return clean(pd.concat([df, load_translated_no(root)], ignore_index=True))
+    return clean(pd.concat(parts, ignore_index=True))
+
+
+def load_calibration_no(root):
+    """Norsk kalibreringssett (testsets/kalibrering_no.jsonl), skrevet med ChatGPT.
+
+    Brukes bare til å velge terskel, aldri til trening eller som testsett.
+    """
+    df = pd.read_json(Path(root) / "testsets" / "kalibrering_no.jsonl", lines=True)
+    return df.assign(source="kalibrering_no", split="kalibrering")
+
+
+def load_chatgpt_train_no(root):
+    """Norske treningsdata skrevet direkte på norsk med ChatGPT (testsets/treningsdata_no.jsonl).
+
+    Like mange angrep som vanlige meldinger, så modellen ikke lærer at «norsk = vanlig».
+    """
+    df = pd.read_json(Path(root) / "testsets" / "treningsdata_no.jsonl", lines=True)
+    return df.assign(source="chatgpt_no", split="train")[COLUMNS]
 
 
 def load_own_testsets(root):
