@@ -19,6 +19,7 @@ A message is an attack if it tries to make the chatbot break, bypass or replace 
 | `notebooks/03_egne_testsett.ipynb` | Baseline on the custom Norwegian and English test sets |
 | `notebooks/04_protectai.ipynb` | `protectai/deberta-v3-base-prompt-injection-v2` compared with the baseline |
 | `notebooks/05_mdeberta_colab.ipynb` | Fine-tunes `microsoft/mdeberta-v3-base` in Google Colab (GPU) |
+| `notebooks/06_sammenligning.ipynb` | Baseline, ProtectAI and mDeBERTa compared on all test sets, with error analysis |
 | `testsets/` | Custom parallel test sets in Norwegian and English (`no.jsonl`, `en.jsonl`), the source files, a build script and a review tool |
 | `docs/` | Labelling guidelines and notes on model choice |
 
@@ -46,30 +47,39 @@ Test data from sources the model never trains on: `Lakera/gandalf_ignore_instruc
 
 The threshold is chosen so that at most 2 % of the harmless messages in the Norwegian calibration set are blocked. For a public service, blocking ordinary citizens is the worst error, so this is a strict setting. (Earlier the threshold was chosen on validation data from the training sources, which are much easier than real Norwegian messages, so far too many harmless messages were blocked.)
 
-Baseline (TF-IDF + logistic regression):
+Three models are compared, all with the threshold chosen this way (`notebooks/06_sammenligning.ipynb`):
 
-| Test set | Recall | False positive rate | ROC AUC |
-|---|---|---|---|
-| Public, sources seen in training | 0.89 | 0.0 % | 1.00 |
-| Public, unseen sources | 0.64 | 0.3 % | 0.98 |
-| NotInject (harmless, with trigger words) | – | 9.7 % | – |
-| Custom, English | 0.37 | 1.4 % | 0.92 |
-| Custom, **Norwegian** | 0.54 | 1.6 % | **0.95** |
+- **Baseline:** TF-IDF + logistic regression.
+- **ProtectAI:** `protectai/deberta-v3-base-prompt-injection-v2`, used as is. It is English-only.
+- **mDeBERTa:** the multilingual `microsoft/mdeberta-v3-base`, fine-tuned on the same training data as the baseline.
 
-At this strict threshold the baseline rarely blocks ordinary messages (1.6 % in Norwegian, 5 % of the harmless messages that look like attacks), but it catches only about half of the Norwegian attacks and very few instructions hidden in documents. A looser threshold catches more attacks at the cost of more false alarms; ROC AUC, which does not depend on the threshold, shows how well the model separates the two classes overall.
+Custom test sets:
 
-`protectai/deberta-v3-base-prompt-injection-v2` on the custom test sets, at its default threshold of 0.5:
+| Model | Recall, Norwegian | False positive rate, Norwegian | ROC AUC, Norwegian | Recall, English | False positive rate, English | ROC AUC, English |
+|---|---|---|---|---|---|---|
+| Baseline | 0.54 | 1.6 % | 0.95 | 0.37 | 1.4 % | 0.92 |
+| ProtectAI | 0.04 | 0.5 % | 0.86 | 0.17 | 0.0 % | 0.96 |
+| mDeBERTa | **0.73** | 3.0 % | 0.95 | **0.70** | 2.5 % | 0.95 |
 
-| Test set | Recall | False positive rate | ROC AUC |
-|---|---|---|---|
-| Custom, English | 0.73 | 4.9 % | 0.96 |
-| Custom, Norwegian | 0.74 | **14.6 %** | 0.86 |
+Public test sets:
 
-With Norwegian training data, the baseline now clearly beats ProtectAI in Norwegian (ROC AUC 0.95 against 0.86) but not in English (0.92 against 0.96). ProtectAI catches almost all obfuscated attacks, while the baseline is much better at instructions hidden in emails (91 % against 29 % on LLMail-Inject Phase2).
+| Model | Recall, sources seen in training | Recall, unseen sources | False positive rate, unseen sources | False positive rate, NotInject | Recall, LLMail-Inject Phase2 |
+|---|---|---|---|---|---|
+| Baseline | 0.89 | 0.64 | 0.3 % | 9.7 % | 0.91 |
+| ProtectAI | 0.08 | 0.36 | 0.0 % | 1.2 % | 0.01 |
+| mDeBERTa | **0.96** | **0.89** | 0.8 % | **28.9 %** | **0.98** |
 
-**ProtectAI cannot be used with a strict threshold in Norwegian.** It gives scores close to 1.0 to many harmless Norwegian messages, so keeping false positives at 2 % on the calibration set pushes its threshold to about 1.0. It then catches only 4 % of the Norwegian attacks. An English-only filter is not a safe choice for a Norwegian public service.
+**mDeBERTa is the best model in Norwegian.** It catches 73 % of the Norwegian attacks against 54 % for the baseline, but blocks slightly more ordinary messages (3.0 % against 1.6 %). With exactly 2 % false positives on the test set itself, so the comparison is fully equal, it catches 72 % of the Norwegian attacks, against 56 % for the baseline and 26 % for ProtectAI. ROC AUC is almost the same as for the baseline (0.95), but mDeBERTa is much better at the strict end of the curve, which is what matters for a public service. It is also clearly best on public sources it has never seen, and it does as well in Norwegian as in English.
 
-Next step: fine-tuning the multilingual `microsoft/mdeberta-v3-base` on the same data. `notebooks/05_mdeberta_colab.ipynb` does this on a free Colab GPU and compares it with the baseline trained on exactly the same data.
+Weaknesses of mDeBERTa, from the error analysis:
+
+- **Instructions hidden in documents almost always get through** (14 % caught in Norwegian, 16 % in English). The model sees an ordinary request to summarise a document, and gives scores around 0.0001. It only catches hidden instructions with obvious markers such as `[SYSTEM]`. Yet it catches 98 % of the email attacks in LLMail-Inject Phase2, so it has learned what the email attacks in the training data look like, not that a document should not give orders.
+- **It blocks 29 % of NotInject**, against 10 % for the baseline. Harmless English sentences in the imperative with words such as *system*, *initialize*, *authorized* and *bypass* get scores close to 1.
+- **It blocks 10 % of the harmless Norwegian messages that look like attacks**: messages about the chatbot or about instructions ("Ny instruks til meg selv: husk å sende meldekort"), role-play and obfuscated text. Even "Hei" scores almost five times the threshold.
+
+**ProtectAI cannot be used with a strict threshold in Norwegian.** It gives scores above 0.99 to 11 % of the ordinary Norwegian messages (4 % in English), especially to harmless messages with words such as "ignorer" or "se bort fra". Keeping false positives at 2 % on the calibration set therefore pushes its threshold to about 1.0, and it catches only 4 % of the Norwegian attacks. At its default threshold of 0.5 it catches 74 % of them but blocks 14.6 % of the ordinary messages. An English-only filter is not a safe choice for a Norwegian public service.
+
+Next step: more Norwegian training examples with instructions hidden in ordinary documents, and more harmless messages with trigger words, as in NotInject but in Norwegian.
 
 ## Getting started
 
@@ -85,7 +95,7 @@ Then run `notebooks/01_load_data.ipynb`, translate the Norwegian training data o
 python src/translate.py
 ```
 
-The translation and notebook 04 need `torch`, `transformers` and `sentencepiece`.
+The translation and notebook 04 need `torch`, `transformers` and `sentencepiece`. Notebook 05 runs in Google Colab; put the `mdeberta_scores.parquet` it downloads in `models/` before running notebook 06.
 
 To rebuild the custom test sets after editing the source files (review results are kept):
 
