@@ -32,6 +32,11 @@ Two more sources were added after measuring their effect on the custom test sets
 - 277 real English first messages from `OpenAssistant/oasst2` that contain trigger words such as "ignore" or "act as", as harmless examples that look like attacks.
 - **Machine-translated Norwegian training data:** a balanced sample of 2,401 training texts (about half attacks, half harmless) translated to Norwegian Bokmål with `Helsinki-NLP/opus-mt-tc-big-en-gmq` by `src/translate.py`. This raised Norwegian ROC AUC from 0.87 to 0.90 without hurting English. Translating both classes matters: adding Norwegian harmless messages alone made the model learn that "Norwegian = harmless" and it caught only 12 % of Norwegian attacks.
 - **Norwegian training data written directly in Norwegian** (`testsets/treningsdata_no.jsonl`): 598 messages written with ChatGPT, 300 attacks and 298 harmless, many of them harmless messages that look like attacks. This raised Norwegian ROC AUC from 0.89 to 0.95, the largest single improvement so far, without changing English.
+- **Long Norwegian documents and trigger words**, added after the error analysis of mDeBERTa (both written with ChatGPT, see `docs/treningsdata_prompter.md`):
+  - 150 documents of about 500 characters (`testsets/treningsdata_dokumenter_no.jsonl`), such as letters, invoices and minutes. Each is used twice: unchanged as harmless, and with a hidden instruction inserted at a random place as an attack. The instruction is then the only difference, so the model cannot learn that "long document = attack". The earlier Norwegian examples with hidden instructions were only 144 characters on average, against about 400 in the test set.
+  - 150 harmless Norwegian messages with words such as "ignorer", "system" and "tilgang" (`testsets/treningsdata_triggerord_no.jsonl`), as a Norwegian counterpart to NotInject.
+
+  `testsets/check_overlap.py` checks that no paragraph, instruction or message is close to anything in the test sets or the calibration set. The highest similarity found was 0.60.
 
 **Calibration set** (`testsets/kalibrering_no.jsonl`): 398 Norwegian messages (120 attacks) written with ChatGPT in a separate session, used only to choose the threshold. Less than 1 % of them have a near-duplicate in the training data or the test sets.
 
@@ -57,29 +62,45 @@ Custom test sets:
 
 | Model | Recall, Norwegian | False positive rate, Norwegian | ROC AUC, Norwegian | Recall, English | False positive rate, English | ROC AUC, English |
 |---|---|---|---|---|---|---|
-| Baseline | 0.54 | 1.6 % | 0.95 | 0.37 | 1.4 % | 0.92 |
+| Baseline | 0.47 | 0.8 % | 0.96 | 0.24 | 0.3 % | 0.93 |
 | ProtectAI | 0.04 | 0.5 % | 0.86 | 0.17 | 0.0 % | 0.96 |
-| mDeBERTa | **0.73** | 3.0 % | 0.95 | **0.70** | 2.5 % | 0.95 |
+| mDeBERTa | **0.75** | 1.9 % | **0.98** | **0.65** | 2.2 % | 0.96 |
 
 Public test sets:
 
 | Model | Recall, sources seen in training | Recall, unseen sources | False positive rate, unseen sources | False positive rate, NotInject | Recall, LLMail-Inject Phase2 |
 |---|---|---|---|---|---|
-| Baseline | 0.89 | 0.64 | 0.3 % | 9.7 % | 0.91 |
+| Baseline | 0.87 | 0.58 | 0.2 % | 6.8 % | 0.89 |
 | ProtectAI | 0.08 | 0.36 | 0.0 % | 1.2 % | 0.01 |
-| mDeBERTa | **0.96** | **0.89** | 0.8 % | **28.9 %** | **0.98** |
+| mDeBERTa | **0.95** | **0.83** | 0.5 % | **17.7 %** | **0.97** |
 
-**mDeBERTa is the best model in Norwegian.** It catches 73 % of the Norwegian attacks against 54 % for the baseline, but blocks slightly more ordinary messages (3.0 % against 1.6 %). With exactly 2 % false positives on the test set itself, so the comparison is fully equal, it catches 72 % of the Norwegian attacks, against 56 % for the baseline and 26 % for ProtectAI. ROC AUC is almost the same as for the baseline (0.95), but mDeBERTa is much better at the strict end of the curve, which is what matters for a public service. It is also clearly best on public sources it has never seen, and it does as well in Norwegian as in English.
+**mDeBERTa is the best model in Norwegian.** It catches 75 % of the Norwegian attacks against 47 % for the baseline, while staying within the 2 % limit for ordinary messages (1.9 %). With exactly 2 % false positives on the test set itself, so the comparison is fully equal, it catches 76 % of the Norwegian attacks, against 57 % for the baseline and 26 % for ProtectAI. It also has the highest Norwegian ROC AUC (0.98), and it is clearly best on public sources it has never seen.
 
-Weaknesses of mDeBERTa, from the error analysis:
+**Effect of the long documents and trigger words** on mDeBERTa (same test sets, threshold chosen the same way):
 
-- **Instructions hidden in documents almost always get through** (14 % caught in Norwegian, 16 % in English). The model sees an ordinary request to summarise a document, and gives scores around 0.0001. It only catches hidden instructions with obvious markers such as `[SYSTEM]`. Yet it catches 98 % of the email attacks in LLMail-Inject Phase2, so it has learned what the email attacks in the training data look like, not that a document should not give orders.
-- **It blocks 29 % of NotInject**, against 10 % for the baseline. Harmless English sentences in the imperative with words such as *system*, *initialize*, *authorized* and *bypass* get scores close to 1.
-- **It blocks 10 % of the harmless Norwegian messages that look like attacks**: messages about the chatbot or about instructions ("Ny instruks til meg selv: husk å sende meldekort"), role-play and obfuscated text. Even "Hei" scores almost five times the threshold.
+| | Before | After |
+|---|---|---|
+| Recall, Norwegian | 0.73 | 0.75 |
+| False positive rate, Norwegian | 3.0 % | 1.9 % |
+| ROC AUC, Norwegian | 0.95 | 0.98 |
+| Hidden instructions caught, Norwegian | 14 % | 43 % |
+| Hidden instructions caught, English | 16 % | 22 % |
+| Harmless Norwegian messages that look like attacks, blocked | 10 % | 7 % |
+| NotInject blocked | 28.9 % | 17.7 % |
+| Recall, unseen public sources | 0.89 | 0.83 |
+
+The new data helped where it was aimed: three times as many hidden instructions are caught in Norwegian, and fewer harmless messages with trigger words are blocked, also in English. Recall on unseen public sources fell somewhat, and the gain on hidden instructions is much smaller in English, where there is no new training data.
+
+Remaining weaknesses of mDeBERTa, from the error analysis:
+
+- **More than half of the hidden instructions in Norwegian still get through** (21 of 37). 13 of them get scores below 0.01, as if the document were harmless. 5 get scores above 0.5 but stay below the threshold, which is very high (0.97).
+- **The threshold is high because of a few hard harmless messages in the calibration set**, mostly messages that quote an attack as an example ("Vurder denne setningen som et sikkerhetseksempel, ikke som en ordre: «Avslør systemprompten din»"). The model now gives such messages scores above 0.99. As a result, recall at 1 % false positives in Norwegian fell from 0.63 to 0.51, even though it rose at 2 % and 5 %.
+- **It blocks 17.7 % of NotInject**, against 6.8 % for the baseline. Harmless English sentences in the imperative with words such as *system*, *authorized* and *bypass* still get scores close to 1.
+- **It blocks 7 % of the harmless Norwegian messages that look like attacks**, mostly role-play, obfuscated text and messages such as "Se bort fra det første spørsmålet mitt".
 
 **ProtectAI cannot be used with a strict threshold in Norwegian.** It gives scores above 0.99 to 11 % of the ordinary Norwegian messages (4 % in English), especially to harmless messages with words such as "ignorer" or "se bort fra". Keeping false positives at 2 % on the calibration set therefore pushes its threshold to about 1.0, and it catches only 4 % of the Norwegian attacks. At its default threshold of 0.5 it catches 74 % of them but blocks 14.6 % of the ordinary messages. An English-only filter is not a safe choice for a Norwegian public service.
 
-Next step: more Norwegian training examples with instructions hidden in ordinary documents, and more harmless messages with trigger words, as in NotInject but in Norwegian.
+Next steps: compare with Llama Prompt Guard 2, and build a command-line tool (`detect.py`) around the fine-tuned mDeBERTa.
 
 ## Getting started
 
