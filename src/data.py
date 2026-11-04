@@ -242,7 +242,7 @@ def load_training_data(root):
     modellen klart dårligere på norsk.
     """
     df = pd.read_parquet(Path(root) / "data" / "combined.parquet")
-    parts = [df, load_chatgpt_train_no(root)]
+    parts = [df, load_chatgpt_train_no(root), load_documents_train_no(root)]
     if (Path(root) / "data" / "translated_no.parquet").exists():
         parts.append(load_translated_no(root))
     else:
@@ -260,12 +260,41 @@ def load_calibration_no(root):
 
 
 def load_chatgpt_train_no(root):
-    """Norske treningsdata skrevet direkte på norsk med ChatGPT (testsets/treningsdata_no.jsonl).
+    """Norske treningsdata skrevet direkte på norsk med ChatGPT.
 
-    Like mange angrep som vanlige meldinger, så modellen ikke lærer at «norsk = vanlig».
+    testsets/treningsdata_no.jsonl har like mange angrep som vanlige meldinger, så
+    modellen ikke lærer at «norsk = vanlig». testsets/treningsdata_triggerord_no.jsonl
+    har bare harmløse meldinger med ord som «ignorer» og «system» (en norsk NotInject).
     """
-    df = pd.read_json(Path(root) / "testsets" / "treningsdata_no.jsonl", lines=True)
+    files = ["treningsdata_no.jsonl", "treningsdata_triggerord_no.jsonl"]
+    df = pd.concat(pd.read_json(Path(root) / "testsets" / f, lines=True)
+                   for f in files if (Path(root) / "testsets" / f).exists())
     return df.assign(source="chatgpt_no", split="train")[COLUMNS]
+
+
+def load_documents_train_no(root, seed=0):
+    """Lange norske dokumenter skrevet med ChatGPT (testsets/treningsdata_dokumenter_no.jsonl).
+
+    Hvert dokument brukes to ganger: uendret (label 0) og med en skjult instruks lagt
+    inn på et tilfeldig sted (label 1). Da er instruksen det eneste som skiller dem,
+    og modellen kan ikke lære at «langt dokument = angrep» eller omvendt.
+    """
+    path = Path(root) / "testsets" / "treningsdata_dokumenter_no.jsonl"
+    if not path.exists():
+        return pd.DataFrame(columns=COLUMNS)
+    rng = random.Random(seed)
+    rows = []
+    for doc in pd.read_json(path, lines=True).itertuples():
+        paragraphs = list(doc.avsnitt)
+        rows.append({"text": "\n\n".join([doc.foresporsel, *paragraphs]), "label": 0})
+        # Instruksen kan stå før, mellom eller etter avsnittene, eller i slutten av et avsnitt.
+        pos = rng.randint(0, len(paragraphs))
+        if rng.random() < 0.25 and pos > 0:
+            paragraphs[pos - 1] = f"{paragraphs[pos - 1]} {doc.instruks}"
+        else:
+            paragraphs.insert(pos, doc.instruks)
+        rows.append({"text": "\n\n".join([doc.foresporsel, *paragraphs]), "label": 1})
+    return pd.DataFrame(rows).assign(source="chatgpt_dok_no", split="train")[COLUMNS]
 
 
 def load_own_testsets(root):
