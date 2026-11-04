@@ -19,7 +19,8 @@ A message is an attack if it tries to make the chatbot break, bypass or replace 
 | `notebooks/03_egne_testsett.ipynb` | Baseline on the custom Norwegian and English test sets |
 | `notebooks/04_protectai.ipynb` | `protectai/deberta-v3-base-prompt-injection-v2` compared with the baseline |
 | `notebooks/05_mdeberta_colab.ipynb` | Fine-tunes `microsoft/mdeberta-v3-base` in Google Colab (GPU) |
-| `notebooks/06_sammenligning.ipynb` | Baseline, ProtectAI and mDeBERTa compared on all test sets, with error analysis |
+| `notebooks/06_sammenligning.ipynb` | All models compared on all test sets, with error analysis |
+| `notebooks/07_prompt_guard.ipynb` | Scores the test sets with `meta-llama/Llama-Prompt-Guard-2-86M` |
 | `testsets/` | Custom parallel test sets in Norwegian and English (`no.jsonl`, `en.jsonl`), the source files, a build script and a review tool |
 | `docs/` | Labelling guidelines and notes on model choice |
 
@@ -52,10 +53,11 @@ Test data from sources the model never trains on: `Lakera/gandalf_ignore_instruc
 
 The threshold is chosen so that at most 2 % of the harmless messages in the Norwegian calibration set are blocked. For a public service, blocking ordinary citizens is the worst error, so this is a strict setting. (Earlier the threshold was chosen on validation data from the training sources, which are much easier than real Norwegian messages, so far too many harmless messages were blocked.)
 
-Three models are compared, all with the threshold chosen this way (`notebooks/06_sammenligning.ipynb`):
+Four models are compared, all with the threshold chosen this way (`notebooks/06_sammenligning.ipynb`):
 
 - **Baseline:** TF-IDF + logistic regression.
 - **ProtectAI:** `protectai/deberta-v3-base-prompt-injection-v2`, used as is. It is English-only.
+- **Prompt Guard 2:** Meta's `meta-llama/Llama-Prompt-Guard-2-86M`, used as is. It is built on the same multilingual `mdeberta-v3-base` as our own model.
 - **mDeBERTa:** the multilingual `microsoft/mdeberta-v3-base`, fine-tuned on the same training data as the baseline.
 
 Custom test sets:
@@ -64,6 +66,7 @@ Custom test sets:
 |---|---|---|---|---|---|---|
 | Baseline | 0.47 | 0.8 % | 0.96 | 0.24 | 0.3 % | 0.93 |
 | ProtectAI | 0.04 | 0.5 % | 0.86 | 0.17 | 0.0 % | 0.96 |
+| Prompt Guard 2 | 0.21 | 0.8 % | 0.95 | 0.28 | 0.8 % | 0.94 |
 | mDeBERTa | **0.75** | 1.9 % | **0.98** | **0.65** | 2.2 % | 0.96 |
 
 Public test sets:
@@ -72,9 +75,12 @@ Public test sets:
 |---|---|---|---|---|---|
 | Baseline | 0.87 | 0.58 | 0.2 % | 6.8 % | 0.89 |
 | ProtectAI | 0.08 | 0.36 | 0.0 % | 1.2 % | 0.01 |
-| mDeBERTa | **0.95** | **0.83** | 0.5 % | **17.7 %** | **0.97** |
+| Prompt Guard 2 | 0.28 | **0.88** | 0.0 % | 2.1 % | 0.10 |
+| mDeBERTa | **0.95** | 0.83 | 0.5 % | **17.7 %** | **0.97** |
 
-**mDeBERTa is the best model in Norwegian.** It catches 75 % of the Norwegian attacks against 47 % for the baseline, while staying within the 2 % limit for ordinary messages (1.9 %). With exactly 2 % false positives on the test set itself, so the comparison is fully equal, it catches 76 % of the Norwegian attacks, against 57 % for the baseline and 26 % for ProtectAI. It also has the highest Norwegian ROC AUC (0.98), and it is clearly best on public sources it has never seen.
+**mDeBERTa is the best model in Norwegian.** It catches 75 % of the Norwegian attacks against 47 % for the baseline, while staying within the 2 % limit for ordinary messages (1.9 %). With exactly 2 % false positives on the test set itself, so the comparison is fully equal, it catches 76 % of the Norwegian attacks, against 57 % for the baseline, 50 % for Prompt Guard 2 and 26 % for ProtectAI. It also has the highest Norwegian ROC AUC (0.98).
+
+**Prompt Guard 2 is good at classic jailbreaks, but misses instructions hidden in text.** On the unseen public sources, which are mostly jailbreaks, it catches 88 % without blocking any ordinary questions, and it blocks only 2.1 % of NotInject. That is the best balance of all the models there. But it catches only 10 % of the email attacks in LLMail-Inject Phase2 and 11 % of the hidden instructions in Norwegian documents, and on the custom test sets it catches few attacks in either language (21 % in Norwegian, 28 % in English). Unlike ProtectAI it handles Norwegian about as well as English (ROC AUC 0.95 against 0.94), so being multilingual helps. We do not know Meta's training data, so some of the public test sets may have been part of it.
 
 **Effect of the long documents and trigger words** on mDeBERTa (same test sets, threshold chosen the same way):
 
@@ -100,7 +106,7 @@ Remaining weaknesses of mDeBERTa, from the error analysis:
 
 **ProtectAI cannot be used with a strict threshold in Norwegian.** It gives scores above 0.99 to 11 % of the ordinary Norwegian messages (4 % in English), especially to harmless messages with words such as "ignorer" or "se bort fra". Keeping false positives at 2 % on the calibration set therefore pushes its threshold to about 1.0, and it catches only 4 % of the Norwegian attacks. At its default threshold of 0.5 it catches 74 % of them but blocks 14.6 % of the ordinary messages. An English-only filter is not a safe choice for a Norwegian public service.
 
-Next steps: compare with Llama Prompt Guard 2, and build a command-line tool (`detect.py`) around the fine-tuned mDeBERTa.
+Next step: build a command-line tool (`detect.py`) around the fine-tuned mDeBERTa.
 
 ## Getting started
 
@@ -116,7 +122,7 @@ Then run `notebooks/01_load_data.ipynb`, translate the Norwegian training data o
 python src/translate.py
 ```
 
-The translation and notebook 04 need `torch`, `transformers` and `sentencepiece`. Notebook 05 runs in Google Colab; put the `mdeberta_scores.parquet` it downloads in `models/` before running notebook 06.
+The translation and notebook 04 need `torch`, `transformers` and `sentencepiece`. Notebook 05 runs in Google Colab; put the `mdeberta_scores.parquet` it downloads in `models/` before running notebook 06. Notebook 07 needs access to the gated Prompt Guard 2 model on Hugging Face (`hf auth login`), and must also be run before notebook 06.
 
 To rebuild the custom test sets after editing the source files (review results are kept):
 
